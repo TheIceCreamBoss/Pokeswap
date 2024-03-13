@@ -88,7 +88,7 @@ async function fetchDemotableFromDb() {
 async function initiateDemotable() {
     return await withOracleDB(async (connection) => {
         try {
-            await connection.execute(`DROP TABLE DEMOTABLE`);
+            await connection.execute(` TABLE DEMOTABDROPLE`);
         } catch(err) {
             console.log('Table might not exist, proceeding to create...');
         }

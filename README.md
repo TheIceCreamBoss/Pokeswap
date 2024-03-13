@@ -3,3 +3,4 @@ Pokéswap is a database designed to streamline the trading experience for Pokém
 
 To start connection to the server : sh ./remote-start.sh
 
+ld
