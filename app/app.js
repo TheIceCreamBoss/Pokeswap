@@ -6,15 +6,15 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var mysql = require('mysql');
-const port = 3000
+var mysql = require('mysql2');
+const port = 3001;
 
 var app = express();
 
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : '3720'
+  password : 'admin'
 });
 
 connection.connect()
