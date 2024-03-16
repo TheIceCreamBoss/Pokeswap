@@ -1,5 +1,17 @@
 const express = require('express');
 const appController = require('./appController');
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "roo@localhost",
+    password: "3720"
+  });
+  
+  con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+  });
 
 // Load environment variables from .env file
 // Ensure your .env file has the required database credentials.
