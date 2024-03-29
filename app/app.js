@@ -31,14 +31,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 var connection = mysql.createConnection({
   host     : process.env.DB_HOST,
   user     : process.env.DB_USER,
   password : process.env.DB_PASS
 });
 
-connection.connect()
+connection.connect();
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
