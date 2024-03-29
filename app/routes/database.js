@@ -5,7 +5,7 @@ const dbService = require('../service/databaseService');
 router.get('/check-db-connection', async (req, res) => {
     const isConnect = await dbService.testMySQLConnection();
     if (isConnect) {
-        res.render('index', { title: 'Connected' });
+        res.send({'text' : 'connected'});
     } else {
         res.render('error', { error: 'Error' });
     }

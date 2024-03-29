@@ -24,7 +24,7 @@
 //     }
 // }
 
-// async function closePoolAndExit() {
+// async function closePoolAndExit () {
 //     console.log('\nTerminating');
 //     try {
 //         await oracledb.getPool().close(10); // 10 seconds grace period for connections to finish
