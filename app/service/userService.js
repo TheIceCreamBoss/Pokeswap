@@ -23,7 +23,26 @@ async function getDB() {
     });
 }
 
+async function createUser(req) { 
+    console.log('createUser'); 
+
+    return new Promise ((resolve, reject) => {
+        connection.query('USE pokeswap');
+        console.log(req);
+        const query = 'INSERT INTO user (email, name, phone_num, profile_visibility) VALUES (?, ?, ?, ?)';
+        const values = [req.email, req.name, req.phone_num, req.profile_visibility];
+         connection.query(query, values, function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                resolve(results);
+            }
+        });
+    });
+}
 
 module.exports = {
-    getDB
+    getDB,
+    createUser
 }

@@ -6,7 +6,7 @@ USE pokeswap;
 #!TABLE INIT!
 #users~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CREATE TABLE `user` (
-	user_id int PRIMARY KEY,
+	user_id int PRIMARY KEY AUTO_INCREMENT,
 email varchar(254) UNIQUE NOT NULL,
 name varchar(50), 
 phone_num char(10), 
@@ -15,7 +15,7 @@ profile_visibility bit NOT NULL DEFAULT 1
 
 #userrating~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CREATE TABLE ratingsRates (
-	rate_id int PRIMARY KEY,
+	rate_id int PRIMARY KEY AUTO_INCREMENT,
 	star_count int NOT NULL,
 	description varchar(200),
 	rate_author_id int NOT NULL,
@@ -29,7 +29,7 @@ UNIQUE (rate_author_id, rate_recipient_id)
 
 #post creation~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CREATE TABLE postCreates (
-	post_id int PRIMARY KEY,
+	post_id int PRIMARY KEY AUTO_INCREMENT,
 	image_link varchar(200),
 content varchar(200) NOT NULL,
 	post_date date NOT NULL,
@@ -38,7 +38,7 @@ FOREIGN KEY (user_id) REFERENCES `user`(user_id) ON DELETE CASCADE
 );
 CREATE TABLE commentsWritesBelongsTo (
 	post_id int,
-	comment_id int,
+	comment_id int AUTO_INCREMENT,
 	user_id int NOT NULL,
 	content varchar(200) NOT NULL,
 	comment_date date NOT NULL,
@@ -104,7 +104,7 @@ FOREIGN KEY (trainer) REFERENCES trainerCardDescriptions(trainer)
 );
 
 CREATE TABLE cardOwnsDescribedAs(
-	card_id int PRIMARY KEY,
+	card_id int PRIMARY KEY AUTO_INCREMENT,
 	psa_rating int,
 	date_uploaded date NOT NULL,
 	user_id int,
@@ -118,7 +118,7 @@ FOREIGN KEY (psa_rating) REFERENCES verifiedRatings(psa_rating)
 
 #trades~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CREATE TABLE tradeOfferTradesWith(
-	trade_id int PRIMARY KEY,
+	trade_id int PRIMARY KEY AUTO_INCREMENT,
 	trade_date date NOT NULL,
 	trade_author_id int NOT NULL,
 	trade_recipient_id int NOT NULL,
