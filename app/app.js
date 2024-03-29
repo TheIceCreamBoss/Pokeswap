@@ -53,7 +53,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page 
   res.status(err.status || 500);
-  res.render('index', { title: 'hi'});
+  res.render('index', { title:  res.locals.error});
 });
 
 app.listen(port, () => {
