@@ -6,9 +6,10 @@ var connection = mysql.createConnection({
     password : process.env.DB_PASS
 });
 
-async function getDB() {
-    console.log('getDB'); 
+async function getPosts() {
+    console.log('getPosts'); 
     return new Promise((resolve, reject) => {
+
         connection.query('USE pokeswap');
 
         connection.query('SELECT * FROM postCreates', function (err, results) {
@@ -22,7 +23,6 @@ async function getDB() {
     });
 }
 
-
 module.exports = {
-    getDB
+    getPosts
 }
