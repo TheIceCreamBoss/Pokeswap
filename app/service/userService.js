@@ -93,8 +93,6 @@ async function deleteUser(req) {
         const user_id = req.body.user_id;
 
         connection.query('USE pokeswap');
-
-
         connection.query('DELETE FROM user WHERE user_id = ?', user_id, function (err, results) {
             if (err) {
                 reject(err);
@@ -106,10 +104,32 @@ async function deleteUser(req) {
     });
 }
 
+// DELETE USER
+async function viewUser(req) {
+    console.log('getDB'); 
+    return new Promise((resolve, reject) => {
+       
+        //obtain user_id from req body
+        const user_id = req.body.user_id;
+        
+        connection.query('USE pokeswap');
+        connection.query('SELECT * FROM user WHERE user_id = ?', user_id, function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                resolve(results);
+            }
+        });
+    });
+}
+
+
 
 module.exports = {
     getDB,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    viewUser
 }

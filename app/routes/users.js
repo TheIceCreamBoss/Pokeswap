@@ -54,7 +54,8 @@ router.patch('/', async (req, res, next) => {
   }
   try {
     const result = await userService.updateUser(req);
-    //Affectedrows will determine if result is successful
+    
+    //Affected rows will determine if result is successful
     if (result.affectedRows > 0) {
       res.render('user', { results: 'Success' });
     } else {
@@ -77,13 +78,39 @@ router.delete('/', async (req, res, next) => {
   }
   try {
     const result = await userService.deleteUser(req);
-    //Affectedrows will determine if result is successful
+   
+    //Affected rows will determine if result is successful
     if (result.affectedRows > 0) {
       res.render('index', { title: 'User deleted Successfully' });
     } else {
       res.status(404).send('User not found');
     }
 
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while specified user');
+  }
+})
+
+//View User
+router.get('/i/', async (req, res, next) => {
+  //Check if json is missing ID
+  if (!req.body.user_id) {
+    return res.status(404).send('Specified ID is missing');
+  }
+
+  try {
+    const result = await userService.viewUser(req);
+    
+    //Check if results is empty
+    if (result.length === 0) {
+      console.log("user search returned empty")
+      res.status(404).send('User with specified ID is not found');
+    } else if (result) {
+      res.render('user', { results: result });
+    } else {
+      res.status(404).send('User not found');
+    }
   } catch (error) {
     console.error(error);
     res.status(500).send('An error occurred while specified user');
