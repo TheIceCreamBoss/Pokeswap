@@ -53,6 +53,7 @@ router.patch('/', async (req, res, next) => {
     return res.status(404).send('Specified ID is missing');
   }
   try {
+    console.log("attempting to update user with id " + req.body.user_id);
     const result = await userService.updateUser(req);
     
     //Affected rows will determine if result is successful
@@ -77,6 +78,7 @@ router.delete('/', async (req, res, next) => {
     return res.status(404).send('Specified ID is missing');
   }
   try {
+    console.log("attempting to delete user with id " + req.body.user_id);
     const result = await userService.deleteUser(req);
    
     //Affected rows will determine if result is successful
@@ -92,7 +94,8 @@ router.delete('/', async (req, res, next) => {
   }
 })
 
-//View User
+//View User(s) based off criteria
+// !!! Needs to be able to filter based off different criteria
 router.get('/i/', async (req, res, next) => {
   //Check if json is missing ID
   if (!req.body.user_id) {
@@ -100,6 +103,7 @@ router.get('/i/', async (req, res, next) => {
   }
 
   try {
+    console.log("attempting to view user with id " + req.body.user_id);
     const result = await userService.viewUser(req);
     
     //Check if results is empty
