@@ -65,7 +65,29 @@ router.patch('/', async (req, res, next) => {
     console.error(error);
     res.status(500).send('An error occurred while specified user');
   }
+
+
+  
 })
 
+//Delete User
+router.delete('/', async (req, res, next) => {
+  if (!req.body.user_id) {
+    return res.status(404).send('Specified ID is missing');
+  }
+  try {
+    const result = await userService.deleteUser(req);
+    //Affectedrows will determine if result is successful
+    if (result.affectedRows > 0) {
+      res.render('index', { title: 'User deleted Successfully' });
+    } else {
+      res.status(404).send('User not found');
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while specified user');
+  }
+})
 
 module.exports = router;
