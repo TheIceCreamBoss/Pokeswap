@@ -50,11 +50,11 @@ async function updateUser(req) {
      // Parse req.body for userID and updateData
     const { user_id: user_Id, ...updateData } = req.body;
     
-    // Set all blank values to n/a as if they are deleted
-    // !!!Nothing on the backend is checking if phonenum is valid, email is valid, etc. Do on frontend!!!
-     Object.keys(updateData).forEach(key => {
+    // !!!Nothing on the backend is checking if phonenum is valid, email is valid, etc. Do on frontend!!! 
+    //not sure if this is the way we want to go about it, if a attribute is empty, set it to null.
+    Object.keys(updateData).forEach(key => {
         if (updateData[key] === "") {
-            updateData[key] = "N/A";
+            updateData[key] = null;
         }
     });
 
