@@ -86,7 +86,7 @@ async function updateUser(req) {
 
 // DELETE USER
 async function deleteUser(req) {
-    console.log('getDB'); 
+    console.log('deleteUser'); 
     return new Promise((resolve, reject) => {
        
         //obtain user_id from req body
@@ -104,9 +104,9 @@ async function deleteUser(req) {
     });
 }
 
-// DELETE USER
+// View USER
 async function viewUser(req) {
-    console.log('getDB'); 
+    console.log('viewUser'); 
     return new Promise((resolve, reject) => {
        
         //obtain user_id from req body
