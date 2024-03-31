@@ -74,7 +74,11 @@ router.get('/i/', async (req, res, next) => {
     try {
         console.log("attempting to view card with id " + req.body.card_id);
         const results = await cardsService.viewCard(req.body);
-        if (results) {
+        
+        if (results.length === 0) {
+            console.log("card search returned empty")
+            res.status(404).send('Card with specified ID is not found');
+        } else if (results) {
         res.render('cardsView', { results: results });
         } else {
         res.status(404).send('Missing specified card to view');

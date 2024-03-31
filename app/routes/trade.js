@@ -70,7 +70,10 @@ router.get('/i', async (req, res, next) => {
   try {
     const results = await tradeService.viewTrade(req);
 
-    if (results) {
+    if (results.length === 0) {
+      console.log("trade search returned empty")
+      res.status(404).send('Trade with specified ID is not found');
+    } else if (results) {
       res.render('trade', { results: results });
     } else {
       res.status(404).send('No trade found');
