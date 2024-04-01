@@ -85,12 +85,58 @@ async function viewTrade(req) {
 }
 
 
+//Included Cards
 
+//Returns cards IDs included in trades based on trade ID, this needs to be paired with who OWNS the card to find out which side of the trade the card belongs to
+async function viewIncludedCards(req) {
+    console.log('viewIncludedCards');
+    return new Promise((resolve, reject) => {
+        connection.query('USE pokeswap');
 
+        connection.query('SELECT * FROM includedCards WHERE trade_id = ?', req.body.trade_id, async function (err,results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                try {
+                    const cardOwnersPromises = results.map(result =>
+                        findCardOwner({ card_id: result.card_id}));
+
+                        const cardOwners = await Promise.all(cardOwnersPromises);
+                        const cardsWithOwners = results.map((result, i) => ({
+                            ...result, cardOwner: cardOwners[i]
+                        }));
+                        console.log(cardsWithOwners);
+                        resolve(cardsWithOwners);
+                } catch (error) {
+                    reject(error);
+                }
+
+            }
+        });
+    })
+}
+//helper to find card owners within a trade
+function findCardOwner(req) {
+    return new Promise((resolve, reject) => {
+ 
+        connection.query('SELECT user_id FROM cardOwnsDescribedAs WHERE card_id = ?', req.card_id, function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                //Below prints out each user_id found
+                //console.log(results);
+                resolve(results.length > 0 ? results[0].user_id : null);
+            }
+        });
+    });
+}
 
 module.exports = {
     getDB,
     createTrade,
     deleteTrade,
-    viewTrade
+    viewTrade,
+    //includedCard
+    viewIncludedCards
 }
