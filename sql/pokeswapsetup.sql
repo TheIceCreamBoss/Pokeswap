@@ -1,4 +1,5 @@
 #!DB INIT!
+DROP DATABASE pokeswap ; 
 CREATE DATABASE pokeswap;
 USE pokeswap;
 
@@ -12,6 +13,8 @@ name varchar(50),
 phone_num char(10), 
 profile_visibility bit NOT NULL DEFAULT 1
 );
+
+ALTER TABLE `user` MODIFY user_id INT AUTO_INCREMENT;
 
 #userrating~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CREATE TABLE ratingsRates (
@@ -36,16 +39,17 @@ content varchar(200) NOT NULL,
 user_id int NOT NULL,
 FOREIGN KEY (user_id) REFERENCES `user`(user_id) ON DELETE CASCADE
 );
+
 CREATE TABLE commentsWritesBelongsTo (
-	post_id int,
-	comment_id int AUTO_INCREMENT,
-	user_id int NOT NULL,
-	content varchar(200) NOT NULL,
-	comment_date date NOT NULL,
-	PRIMARY KEY (post_id, comment_id),
-	FOREIGN KEY (post_id) REFERENCES postCreates(post_id) ON DELETE CASCADE,
-	FOREIGN KEY (user_id) REFERENCES `user`(user_id) ON DELETE CASCADE
-);
+    comment_id int AUTO_INCREMENT,
+    post_id int NOT NULL,
+    user_id int NOT NULL,
+    content varchar(200) NOT NULL,
+    comment_date date NOT NULL,
+    PRIMARY KEY (comment_id),
+    FOREIGN KEY (post_id) REFERENCES postCreates(post_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES `user`(user_id) ON DELETE CASCADE
+
 
 
 #card creation/definitons~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -162,7 +166,7 @@ INSERT INTO postCreates (post_id, image_link, content, post_date, user_id) VALUE
 
 INSERT INTO commentsWritesBelongsTo (post_id, comment_id, user_id, content, comment_date) VALUES
 (1, 1, 1, 'Such a cool card!', '2024-02-28'),
-(2, 1, 1, 'I think this is a fake!', '2024-02-27'),
+(2, 2, 1, 'I think this is a fake!', '2024-02-27'),
 (3, 3, 2, 'Did you get scammed?', '2024-02-26'),
 (4, 4, 3, 'I completely agree.', '2024-02-25'),
 (4, 5, 4, 'I disagree with your opinion...', '2024-02-24');
@@ -272,8 +276,3 @@ INSERT INTO includedCards (trade_id, card_id) VALUES
 (2, 3),
 (3, 4),
 (4, 5);
-
-
-
-
-

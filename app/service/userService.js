@@ -10,10 +10,9 @@ var connection = mysql.createConnection({
 async function getDB() {
     console.log('getDB'); 
     return new Promise((resolve, reject) => {
-
         connection.query('USE pokeswap');
 
-        connection.query('SELECT * FROM user', function (err, results) {
+        connection.query('SELECT * FROM postCreates', function (err, results) {
             if (err) {
                 reject(err);
             } else {

@@ -5,12 +5,16 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config()
 var app = express();
+app.use(express.json());
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var dbRouter = require('./routes/database');
 var tradeRouter = require('./routes/trade');
 var postsRouter = require('./routes/posts');
+var commentsRouter = require('./routes/comments');
+
+
 var cardsRouter = require('./routes/cards');
 var mysql = require('mysql2');
 const port = 3001
@@ -20,6 +24,7 @@ app.use('/users', usersRouter);
 app.use('/db', dbRouter);
 app.use('/trade', tradeRouter);
 app.use('/posts', postsRouter);
+app.use('/comments', commentsRouter);
 app.use('/cards', cardsRouter);
 
 // connection.end()
