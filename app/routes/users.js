@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
     const results = await userService.getDB();
 
     if (results) {
-      res.render('user', { results: results });
+      res.send(results);
     } else {
       res.status(404).send('No users found');
     }
