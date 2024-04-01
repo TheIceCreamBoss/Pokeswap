@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-//Create Trade
+//Create Trade with specified cards.
 router.post('/', async (req, res, next) => {
   //Check if required fields are present
   if (!req.body.trade_author_id || !req.body.trade_recipient_id) {
@@ -107,6 +107,25 @@ router.get('/includedCards', async (req, res, next) => {
   } catch (error) {
     console.error(error);
     res.status(500).send('An error occurred while fetching trade and related cards');
+  }
+})
+
+//Add cards owned by given recipient USER and trade creator user id into trade
+router.post('/addCards', async (req, res, next) => {
+  try {
+    const result = await tradeService.addCardsToTrade(req.body);
+
+    if (result.affectedRows > 0) {
+      console.log(result);
+      res.render('trade', { results: result });
+    } else {
+      res.status(404).send('Error adding cards to trade');
+    }
+    
+  }
+  catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while adding cards to trade');
   }
 })
 
