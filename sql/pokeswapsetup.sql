@@ -18,7 +18,7 @@ ALTER TABLE `user` MODIFY user_id INT AUTO_INCREMENT;
 
 #userrating~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CREATE TABLE ratingsRates (
-	rate_id int PRIMARY KEY,
+	rate_id int PRIMARY KEY AUTO_INCREMENT,
 	star_count int NOT NULL,
 	description varchar(200),
 	rate_author_id int NOT NULL,
@@ -32,7 +32,7 @@ UNIQUE (rate_author_id, rate_recipient_id)
 
 #post creation~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CREATE TABLE postCreates (
-	post_id int PRIMARY KEY,
+	post_id int PRIMARY KEY AUTO_INCREMENT,
 	image_link varchar(200),
 content varchar(200) NOT NULL,
 	post_date date NOT NULL,
@@ -42,14 +42,14 @@ FOREIGN KEY (user_id) REFERENCES `user`(user_id) ON DELETE CASCADE
 
 CREATE TABLE commentsWritesBelongsTo (
     comment_id int AUTO_INCREMENT,
-    post_id int,
+    post_id int NOT NULL,
     user_id int NOT NULL,
     content varchar(200) NOT NULL,
     comment_date date NOT NULL,
     PRIMARY KEY (comment_id),
     FOREIGN KEY (post_id) REFERENCES postCreates(post_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES `user`(user_id) ON DELETE CASCADE
-);
+
 
 
 #card creation/definitons~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -108,7 +108,7 @@ FOREIGN KEY (trainer) REFERENCES trainerCardDescriptions(trainer)
 );
 
 CREATE TABLE cardOwnsDescribedAs(
-	card_id int PRIMARY KEY,
+	card_id int PRIMARY KEY AUTO_INCREMENT,
 	psa_rating int,
 	date_uploaded date NOT NULL,
 	user_id int,
@@ -122,7 +122,7 @@ FOREIGN KEY (psa_rating) REFERENCES verifiedRatings(psa_rating)
 
 #trades~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CREATE TABLE tradeOfferTradesWith(
-	trade_id int PRIMARY KEY,
+	trade_id int PRIMARY KEY AUTO_INCREMENT,
 	trade_date date NOT NULL,
 	trade_author_id int NOT NULL,
 	trade_recipient_id int NOT NULL,
