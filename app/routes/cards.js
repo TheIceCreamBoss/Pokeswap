@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
        
         const results = await cardsService.getAllCards();
         if (results) {
-        res.render('cardsView', { results: results });
+        res.send(results);
         } else {
         res.status(404).send('No cards found');
         }
@@ -25,7 +25,7 @@ router.post('/', async (req, res, next) => {
         console.log("attempting to upload card");
         const results = await cardsService.uploadCard(req.body);
         if (results.affectedRows > 0) {
-        res.render('cardsView', { results: results });
+        res.send(results);
         } else {
         res.status(404).send('No card information found');
         }
@@ -42,7 +42,7 @@ router.patch('/', async (req, res, next) => {
         console.log("attempting to update card with id " + req.body.card_id);
         const results = await cardsService.updateCard(req.body);
         if (results.affectedRows > 0) {
-        res.render('cardsView', { results: results });
+        res.send(results);
         } else {
         res.status(404).send('Missing specified card to update');
         }
@@ -58,7 +58,7 @@ router.delete('/', async (req, res, next) => {
         console.log("attempting to delete card with id " + req.body.card_id);
         const results = await cardsService.deleteCard(req.body);
         if (results.affectedRows > 0) {
-        res.render('cardsView', { results: results });
+        res.send(results);
         } else {
         res.status(404).send('Missing specified card to delete');
         }
@@ -79,7 +79,7 @@ router.get('/i/', async (req, res, next) => {
             console.log("card search returned empty")
             res.status(404).send('Card with specified ID is not found');
         } else if (results) {
-        res.render('cardsView', { results: results });
+        res.send(results);
         } else {
         res.status(404).send('Missing specified card to view');
         }

@@ -7,7 +7,7 @@ router.get('/check-db-connection', async (req, res) => {
     if (isConnect) {
         res.send({'text' : 'connected'});
     } else {
-        res.render('error', { error: 'Error' });
+        res.send({ message: ' Successfully' });
     }
 });
 

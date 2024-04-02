@@ -35,7 +35,7 @@ router.post('/', async (req, res, next) => {
 
     if (result) {
       console.log(result);
-      res.render('user', { results: result });
+      res.send(result);
     } else {
       res.status(404).send('Error inserting new user');
     }
@@ -58,7 +58,7 @@ router.patch('/', async (req, res, next) => {
     
     //Affected rows will determine if result is successful
     if (result.affectedRows > 0) {
-      res.render('user', { results: 'Success' });
+      res.send({ message: 'User updated successfully' });
     } else {
       res.status(404).send('User not found');
     }
@@ -83,7 +83,7 @@ router.delete('/', async (req, res, next) => {
    
     //Affected rows will determine if result is successful
     if (result.affectedRows > 0) {
-      res.render('index', { title: 'User deleted Successfully' });
+      res.send({ message: 'User deleted Successfully' });
     } else {
       res.status(404).send('User not found');
     }
@@ -111,7 +111,7 @@ router.get('/i/', async (req, res, next) => {
       console.log("user search returned empty")
       res.status(404).send('User with specified ID is not found');
     } else if (result) {
-      res.render('user', { results: result });
+      res.send(result);
     } else {
       res.status(404).send('User not found');
     }

@@ -10,7 +10,7 @@ router.get('/', async (req, res, next) => {
     const results = await tradeService.getDB();
 
     if (results) {
-      res.render('trade', { results: results });
+      res.send(results);
     } else {
       res.status(404).send('No trades found');
     }
@@ -33,7 +33,7 @@ router.post('/', async (req, res, next) => {
 
     if (result.affectedRows > 0) {
       console.log(result);
-      res.render('trade', { results: result });
+      res.send(result);
     } else {
       res.status(404).send('Error inserting new trade');
     }
@@ -55,7 +55,7 @@ router.delete('/', async (req, res, next) => {
     
     //Affected rows will determine if result is successful
     if (result.affectedRows > 0) {
-      res.render('trade', { results: 'Success' });
+      res.send({ message: 'Trade deleted Successfully' });
     } else {
       res.status(404).send('Error deleting trade');
     }
@@ -74,7 +74,7 @@ router.get('/i', async (req, res, next) => {
       console.log("trade search returned empty")
       res.status(404).send('Trade with specified ID is not found');
     } else if (results) {
-      res.render('trade', { results: results });
+      res.send(results);
     } else {
       res.status(404).send('No trade found');
     }
@@ -99,7 +99,7 @@ router.get('/includedCards', async (req, res, next) => {
       console.log("trade search returned empty")
       res.status(404).send('Cards included with specified trade ID not found');
     } else if (results) {
-      res.render('includedCardView', { results: results });
+      res.send(results);
     } else {
       res.status(404).send('Specified trade not found');
     }
