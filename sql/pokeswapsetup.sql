@@ -7,12 +7,15 @@ USE pokeswap;
 #!TABLE INIT!
 #users~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CREATE TABLE `user` (
-	user_id int PRIMARY KEY AUTO_INCREMENT,
-email varchar(254) UNIQUE NOT NULL,
-name varchar(50), 
-phone_num char(10), 
-profile_visibility bit NOT NULL DEFAULT 1
+  user_id int PRIMARY KEY AUTO_INCREMENT,
+  email varchar(254) UNIQUE NOT NULL,
+  name varchar(50), 
+  phone_num char(10), 
+  profile_visibility bit NOT NULL DEFAULT 1,
+  CONSTRAINT `chk_email_format` CHECK (email REGEXP '^.+@.+\\..+$'),
+  CONSTRAINT `chk_phone_length` CHECK (CHAR_LENGTH(phone_num) = 10 AND phone_num REGEXP '^[0-9]+$')
 );
+
 
 ALTER TABLE `user` MODIFY user_id INT AUTO_INCREMENT;
 
@@ -276,3 +279,5 @@ INSERT INTO includedCards (trade_id, card_id) VALUES
 (2, 3),
 (3, 4),
 (4, 5);
+
+
