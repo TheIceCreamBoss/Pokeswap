@@ -3,7 +3,23 @@ var router = express.Router();
 const cardTypesService = require('../service/cardTypesService');
 router.use(express.json());
 
-// View pokemon cards
+// View ALL cards
+router.get('/', async (req, res, next) => {
+    try {
+       
+        const results = await cardTypesService.getAllCards();
+        if (results) {
+        res.send(results);
+        } else {
+        res.status(404).send('No cards found');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred while fetching cards');
+    }
+})
+
+
 router.get('/p', async (req, res, next) => {
     try {
        
