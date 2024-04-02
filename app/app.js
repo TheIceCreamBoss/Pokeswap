@@ -15,7 +15,7 @@ var commentsRouter = require('./routes/comments');
 var ratingRouter = require('./routes/ratings');
 var cardsRouter = require('./routes/cards');
 var mysql = require('mysql2');
-const port = 3001
+const port = 3001;
 
 app.use('/users', usersRouter);
 app.use('/', dbRouter);

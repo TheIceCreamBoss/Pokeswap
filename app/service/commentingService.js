@@ -13,7 +13,7 @@ async function getComments() {
         connection.query('USE pokeswap');
 
         connection.query('SELECT * FROM commentsWritesBelongsTo', function (err, results) {
-            if (err) {s
+            if (err) {
                 reject(err);
             } else {
                 console.log(results);
