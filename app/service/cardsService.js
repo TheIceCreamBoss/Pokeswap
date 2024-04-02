@@ -105,15 +105,89 @@ async function deleteCard(req) {
     });
 }
 
-// !!! Needs to be able to filter based off different criteria
-//View card(s) based off criteria
-async function viewCard(req) {
+//View card(s) based off ANDed criteria
+async function viewCardAND(req) {
     console.log('viewCard'); 
+    const searchData = req.body;
+
+    const fields = [];
+    const values = [];
+
+    Object.entries(searchData).forEach(([key, value]) => {
+        if (value === null) {
+            // If the value is null, use IS NULL in the query
+            fields.push(`${key} IS NULL`);
+        } else {
+            // If the value is not null, use the given attribute
+            fields.push(`${key} = ?`);
+            values.push(value);
+        }
+    });
+
+    const queryCondition = fields.join(' AND ');
+    const query = `SELECT * FROM cardOwnsDescribedAs WHERE ${queryCondition}`;
+
     return new Promise ((resolve, reject) => {
         connection.query('USE pokeswap');
+        console.log(fields);
+        console.log(query);
+        console.log(values);
+         connection.query(query, values, function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                resolve(results);
+            }
+        });
+    });
+}
 
+
+//View card(s) based off criteria ORed together
+async function viewCardOR(req) {
+    console.log('viewCard'); 
+
+    const searchData = req.body;
+    const fields = [];
+    const values = [];
+    Object.entries(searchData).forEach(([key, value]) => {
+        if (value === null) {
+            // If the value is null, use IS NULL in the query
+            fields.push(`${key} IS NULL`);
+        } else {
+            // If the value is not null, use the given attribute
+            fields.push(`${key} = ?`);
+            values.push(value);
+        }
+    });
+
+    const queryCondition = fields.join(' OR ');
+    const query = `SELECT * FROM cardOwnsDescribedAs WHERE ${queryCondition}`;
+
+    return new Promise ((resolve, reject) => {
+        connection.query('USE pokeswap');
+        console.log(fields);
+        console.log(query);
+        console.log(values);
+         connection.query(query, values, function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                resolve(results);
+            }
+        });
+    });
+}
+
+// delete a specific card
+async function deleteCard(req) {
+    console.log('deleteCard'); 
+    return new Promise ((resolve, reject) => {
+        connection.query('USE pokeswap');
         //Sanitization, ? handles escaping of special characters
-        const query = 'SELECT * FROM cardOwnsDescribedAs WHERE card_id = ?';
+        const query = 'DELETE FROM cardOwnsDescribedAs WHERE card_id = ?';
         const values = [req.card_id];
          connection.query(query, values, function (err, results) {
             if (err) {
@@ -125,10 +199,14 @@ async function viewCard(req) {
         });
     });
 }
+
+
+
 module.exports = {
    getAllCards,
    uploadCard,
    updateCard,
    deleteCard,
-   viewCard
+   viewCardAND,
+   viewCardOR
 }

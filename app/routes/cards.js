@@ -69,15 +69,36 @@ router.delete('/', async (req, res, next) => {
 })
 
 //view card
-// !!! Needs to be able to filter based off different criteria
-router.get('/i/', async (req, res, next) => {
+//filters based off different criteria ANDed together
+router.get('/a', async (req, res, next) => {
     try {
-        console.log("attempting to view card with id " + req.body.card_id);
-        const results = await cardsService.viewCard(req.body);
+        console.log("attempting to view card(s) with attriutes ANDed together");
+        const results = await cardsService.viewCardAND(req);
         
         if (results.length === 0) {
             console.log("card search returned empty")
-            res.status(404).send('Card with specified ID is not found');
+            res.status(404).send('Card with specified parameter(s) not found');
+        } else if (results) {
+        res.send(results);
+        } else {
+        res.status(404).send('Missing specified card to view');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred while viewing card');
+    }
+})
+
+//view card
+//filters based off different criteria ORed together
+router.get('/o', async (req, res, next) => {
+    try {
+        console.log("attempting to view card(s) with attributes ORed together");
+        const results = await cardsService.viewCardOR(req);
+        
+        if (results.length === 0) {
+            console.log("card search returned empty")
+            res.status(404).send('Card with specified parameter(s) not found');
         } else if (results) {
         res.send(results);
         } else {
