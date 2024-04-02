@@ -49,7 +49,7 @@ CREATE TABLE commentsWritesBelongsTo (
     PRIMARY KEY (comment_id),
     FOREIGN KEY (post_id) REFERENCES postCreates(post_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES `user`(user_id) ON DELETE CASCADE
-
+);
 
 
 #card creation/definitons~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
