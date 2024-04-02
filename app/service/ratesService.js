@@ -23,6 +23,43 @@ async function getRates() {
     });
 }
 
+//GET AVERAGE RATING OF ALL USERS
+async function getAverages() {
+    console.log('get average'); 
+    return new Promise((resolve, reject) => {
+        connection.query('USE pokeswap');
+        connection.query('SELECT rate_recipient_id AS "User ID", AVG(star_count) AS "Average Rating out of 5" FROM ratingsRates GROUP BY rate_recipient_id', function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                resolve(results);
+            }
+        });
+    });
+}
+
+
+//GET AVERAGE RATING FILTERING WITH INEQUALITY
+async function getAverageInequality(req) {
+    console.log('get average'); 
+    return new Promise((resolve, reject) => {
+        connection.query('USE pokeswap');
+        connection.query('SELECT rate_recipient_id AS "User ID", AVG(star_count) AS "Average Rating out of 5" FROM ratingsRates GROUP BY rate_recipient_id HAVING AVG(star_count) ' + req.body.inequality + ' ' + req.body.star_count, function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                resolve(results);
+            }
+        });
+    });
+
+}
+
+
 module.exports = {
-    getRates
+    getRates,
+    getAverageInequality,
+    getAverages
 };
