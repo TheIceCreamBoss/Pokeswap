@@ -57,7 +57,15 @@ async function fetchAndDisplayUsers() {
         const row = tableBody.insertRow();
         Object.values(post).forEach((field, index) => {
             const cell = row.insertCell(index);
-            cell.textContent = field;
+            if (typeof field === 'object') {
+                if (field === null) {
+                    cell.textContent = 'NULL';
+                } else {
+                    cell.textContent = field.data[0] ? 'true' : 'false';
+                }
+            } else {
+                cell.textContent = field;
+            }
         });
     });
 }
@@ -82,14 +90,22 @@ async function fetchAndDisplayRatings() {
         const row = tableBody.insertRow();
         Object.values(post).forEach((field, index) => {
             const cell = row.insertCell(index);
-            cell.textContent = field;
+            if (typeof field === 'object') {
+                if (field === null) {
+                    cell.textContent = 'NULL';
+                } else {
+                    cell.textContent = field.data[0] ? 'true' : 'false';
+                }
+            } else {
+                cell.textContent = field;
+            }
         });
     });
 }
 
 // Fetches data from the demotable and displays it.
-async function fetchAndDisplayPokemonCards() {
-    const tableElement = document.getElementById('pokemonCardsTable');
+async function fetchAndDisplayPO() {
+    const tableElement = document.getElementById('table_po');
     const tableBody = tableElement.querySelector('tbody');
 
     const response = await fetch('/cardTypes/p', {
@@ -98,116 +114,275 @@ async function fetchAndDisplayPokemonCards() {
 
     const responseData = await response.json();
 
-    // Always clear old, already fetched data before new fetching process.
     if (tableBody) {
         tableBody.innerHTML = '';
     }
-
     responseData.forEach(post => {
         const row = tableBody.insertRow();
         Object.values(post).forEach((field, index) => {
             const cell = row.insertCell(index);
-            cell.textContent = field;
+            if (typeof field === 'object') {
+                if (field === null) {
+                    cell.textContent = 'NULL';
+                } else {
+                    cell.textContent = field.data[0] ? 'true' : 'false';
+                }
+            } else {
+                cell.textContent = field;
+            }
         });
     });
 }
 
-// This function resets or initializes the demotable.
-async function resetUserTable() {
-    const response = await fetch("/initiate-demotable", {
-        method: 'POST'
-    });
-    const responseData = await response.json();
+async function fetchAndDisplayPO2() {
+    const tableElement = document.getElementById('table_po2');
+    const tableBody = tableElement.querySelector('tbody');
 
-    if (responseData.success) {
-        const messageElement = document.getElementById('resetResultMsg');
-        messageElement.textContent = "userTable initiated successfully!";
-        fetchTableData();
-    } else {
-        alert("Error initiating table!");
-    }
-}
-
-// Inserts new records into the demotable.
-async function insertDemotable(event) {
-    event.preventDefault();
-
-    const idValue = document.getElementById('insertId').value;
-    const nameValue = document.getElementById('insertName').value;
-
-    const response = await fetch('/insert-demotable', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            id: idValue,
-            name: nameValue
-        })
-    });
-
-    const responseData = await response.json();
-    const messageElement = document.getElementById('insertResultMsg');
-
-    if (responseData.success) {
-        messageElement.textContent = "Data inserted successfully!";
-        fetchTableData();
-    } else {
-        messageElement.textContent = "Error inserting data!";
-    }
-}
-
-// Updates names in the demotable.
-async function updateNameDemotable(event) {
-    event.preventDefault();
-
-    const oldNameValue = document.getElementById('updateOldName').value;
-    const newNameValue = document.getElementById('updateNewName').value;
-
-    const response = await fetch('/update-name-demotable', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            oldName: oldNameValue,
-            newName: newNameValue
-        })
-    });
-
-    const responseData = await response.json();
-    const messageElement = document.getElementById('updateNameResultMsg');
-
-    if (responseData.success) {
-        messageElement.textContent = "Name updated successfully!";
-        fetchTableData();
-    } else {
-        messageElement.textContent = "Error updating name!";
-    }
-}
-
-// Counts rows in the demotable.
-// Modify the function accordingly if using different aggregate functions or procedures.
-async function countDemotable() {
-    const response = await fetch("/count-demotable", {
+    const response = await fetch('/cardTypes/p2', {
         method: 'GET'
     });
 
     const responseData = await response.json();
-    const messageElement = document.getElementById('countResultMsg');
 
-    if (responseData.success) {
-        const tupleCount = responseData.count;
-        messageElement.textContent = `The number of tuples in demotable: ${tupleCount}`;
-    } else {
-        alert("Error in count demotable!");
+    if (tableBody) {
+        tableBody.innerHTML = '';
     }
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            if (typeof field === 'object') {
+                if (field === null) {
+                    cell.textContent = 'NULL';
+                } else {
+                    cell.textContent = field.data[0] ? 'true' : 'false';
+                }
+            } else {
+                cell.textContent = field;
+            }
+        });
+    });
 }
+
+// Fetches data from the demotable and displays it.
+async function fetchAndDisplayTR() {
+    const tableElement = document.getElementById('table_tr');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/cardTypes/t', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            if (typeof field === 'object') {
+                if (field === null) {
+                    cell.textContent = 'NULL';
+                } else {
+                    cell.textContent = field.data[0] ? 'true' : 'false';
+                }
+            } else {
+                cell.textContent = field;
+            }
+        });
+    });
+}
+
+async function fetchAndDisplayTR2() {
+    const tableElement = document.getElementById('table_tr2');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/cardTypes/t2', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            if (typeof field === 'object') {
+                if (field === null) {
+                    cell.textContent = 'NULL';
+                } else {
+                    cell.textContent = field.data[0] ? 'true' : 'false';
+                }
+            } else {
+                cell.textContent = field;
+            }
+        });
+    });
+}
+
+// Fetches data from the demotable and displays it.
+async function fetchAndDisplayEN() {
+    const tableElement = document.getElementById('table_en');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/cardTypes/e', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            if (typeof field === 'object') {
+                if (field === null) {
+                    cell.textContent = 'NULL';
+                } else {
+                    cell.textContent = field.data[0] ? 'true' : 'false';
+                }
+            } else {
+                cell.textContent = field;
+            }
+        });
+    });
+}
+
+async function fetchAndDisplayEN2() {
+    const tableElement = document.getElementById('table_en2');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/cardTypes/e2', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            if (typeof field === 'object') {
+                if (field === null) {
+                    cell.textContent = 'NULL';
+                } else {
+                    cell.textContent = field.data[0] ? 'true' : 'false';
+                }
+            } else {
+                cell.textContent = field;
+            }
+        });
+    });
+}
+
+// // This function resets or initializes the demotable.
+// async function resetUserTable() {
+//     const response = await fetch("/initiate-demotable", {
+//         method: 'POST'
+//     });
+//     const responseData = await response.json();
+
+//     if (responseData.success) {
+//         const messageElement = document.getElementById('resetResultMsg');
+//         messageElement.textContent = "userTable initiated successfully!";
+//         fetchTableData();
+//     } else {
+//         alert("Error initiating table!");
+//     }
+// }
+
+// // Inserts new records into the demotable.
+// async function insertDemotable(event) {
+//     event.preventDefault();
+
+//     const idValue = document.getElementById('insertId').value;
+//     const nameValue = document.getElementById('insertName').value;
+
+//     const response = await fetch('/insert-demotable', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             id: idValue,
+//             name: nameValue
+//         })
+//     });
+
+//     const responseData = await response.json();
+//     const messageElement = document.getElementById('insertResultMsg');
+
+//     if (responseData.success) {
+//         messageElement.textContent = "Data inserted successfully!";
+//         fetchTableData();
+//     } else {
+//         messageElement.textContent = "Error inserting data!";
+//     }
+// }
+
+// // Updates names in the demotable.
+// async function updateNameDemotable(event) {
+//     event.preventDefault();
+
+//     const oldNameValue = document.getElementById('updateOldName').value;
+//     const newNameValue = document.getElementById('updateNewName').value;
+
+//     const response = await fetch('/update-name-demotable', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             oldName: oldNameValue,
+//             newName: newNameValue
+//         })
+//     });
+
+//     const responseData = await response.json();
+//     const messageElement = document.getElementById('updateNameResultMsg');
+
+//     if (responseData.success) {
+//         messageElement.textContent = "Name updated successfully!";
+//         fetchTableData();
+//     } else {
+//         messageElement.textContent = "Error updating name!";
+//     }
+// }
+
+// // Counts rows in the demotable.
+// // Modify the function accordingly if using different aggregate functions or procedures.
+// async function countDemotable() {
+//     const response = await fetch("/count-demotable", {
+//         method: 'GET'
+//     });
+
+//     const responseData = await response.json();
+//     const messageElement = document.getElementById('countResultMsg');
+
+//     if (responseData.success) {
+//         const tupleCount = responseData.count;
+//         messageElement.textContent = `The number of tuples in demotable: ${tupleCount}`;
+//     } else {
+//         alert("Error in count demotable!");
+//     }
+// }
 
 
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
 // Add or remove event listeners based on the desired functionalities.
+
 window.onload = function() {
     checkDbConnection();
     fetchTableData();
@@ -222,5 +397,13 @@ window.onload = function() {
 function fetchTableData() {
     fetchAndDisplayUsers();
     fetchAndDisplayRatings();
-    fetchAndDisplayPokemonCards();
+    fetchAndDisplayPO();
+    fetchAndDisplayPO2();
+    fetchAndDisplayTR();
+    fetchAndDisplayTR2();
+    fetchAndDisplayEN();
+    fetchAndDisplayEN2();
+    fetchAndDisplayCards();
+    fetchAndDisplayEN2();
+
 }
