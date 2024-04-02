@@ -16,9 +16,6 @@ CREATE TABLE `user` (
   CONSTRAINT `chk_phone_length` CHECK (CHAR_LENGTH(phone_num) = 10 AND phone_num REGEXP '^[0-9]+$')
 );
 
-
-ALTER TABLE `user` MODIFY user_id INT AUTO_INCREMENT;
-
 #userrating~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CREATE TABLE ratingsRates (
 	rate_id int PRIMARY KEY AUTO_INCREMENT,
@@ -29,7 +26,8 @@ CREATE TABLE ratingsRates (
 	rate_date date NOT NULL,
 	FOREIGN KEY (rate_author_id) REFERENCES user(user_id) ON DELETE CASCADE,
 FOREIGN KEY (rate_recipient_id) REFERENCES user(user_id) ON DELETE CASCADE,
-UNIQUE (rate_author_id, rate_recipient_id)
+UNIQUE (rate_author_id, rate_recipient_id),
+CONSTRAINT `chk_star_max` CHECK (star_count BETWEEN 1 AND 5)
 );
 
 
@@ -144,20 +142,51 @@ CREATE TABLE includedCards(
 
 
 #users~~~~~~~~~~~~~~~~~
-INSERT INTO user (user_id, email, name, phone_num, profile_visibility) VALUES
-(1, 'erik.lin@gmail.com', 'Erik Lin', '1234567890', 1),
-(2, 'nich.zhang@gmail.com', 'Nechael Zhang', '2345678901', 1),
-(3, 'jay.park@gmail.com', 'Jay Park', '3456789012', 0),
-(4, 'jamie.kim@gmail.com', 'Jamie Kim', NULL, 1),
-(5, 'anon@gmail.com', NULL, NULL, 1);
+INSERT INTO user (email, name, phone_num, profile_visibility) VALUES
+('erik.lin@gmail.com', 'Erik Lin','2501112222', 1),
+('nich.zhang@gmail.com', 'Nechael Zhang','7783334444', 1),
+('jay.park@gmail.com', 'Jay Park', '7782222222', 0),
+('jamie.kim@gmail.com', 'Jamie Kim', NULL, 1),
+('anon@gmail.com', NULL, NULL, 1),
+('joe.jim@gmail.com', 'pokemonlover3000', NULL, 1),
+('abc.def@hotmail.com', 'abc', NULL, 1),
+('andre.wen@andre.com', 'andre', '2501111111', 0);
+#8 tuples
 
 #ratings~~~~~~~~~~~~~~~~
-INSERT INTO ratingsRates (rate_id, star_count, description, rate_author_id, rate_recipient_id, rate_date) VALUES
-(1, 5, 'Perfect!', 1, 2, '2024-02-28'),
-(2, 4, 'Smooth experience and fast communication', 2, 3, '2024-02-27'),
-(3, 1, 'Scammer!', 3, 4, '2024-02-26'),
-(4, 2, NULL, 4, 5, '2024-02-25'),
-(5, 5, 'Friendly and fast.', 5, 1, '2024-02-24');
+INSERT INTO ratingsRates (star_count, description, rate_author_id, rate_recipient_id, rate_date) VALUES
+(3, 'Fine', 1, 2, '2024-01-11'),
+(1, 'Scammed me', 1, 4, '2023-08-25'),
+(2, NULL, 1, 6, '2024-02-09'),
+(4, 'Fast and Friendly', 1, 8, '2023-11-01'),
+(5, 'No complaints', 2, 1, '2023-12-16'),
+(3, 'Okay experience', 2, 3, '2023-12-02'),
+(3, NULL, 2, 5, '2023-04-22'),
+(5, 'Threw in a free gift :D', 2, 7, '2023-08-01'),
+(1, 'Card arrived damaged', 3, 2, '2023-04-20'),
+(2, 'Rude and misleading', 3, 4, '2023-05-04'),
+(4, 'Decent experience', 3, 6, '2023-08-02'),
+(3, 'Okay', 3, 8, '2024-02-29'),
+(1, NULL, 4, 1, '2023-08-30'),
+(5, ':D', 4, 3, '2023-06-15'),
+(1, 'boo', 4, 5, '2023-09-10'),
+(2, 'meh', 4, 7, '2023-10-05'),
+(4, 'zzz', 5, 2, '2023-04-03'),
+(5, 'good customer service', 5, 4, '2023-05-20'),
+(3, 'bleh', 5, 6, '2023-07-25'),
+(2, 'bad', 5, 8, '2023-12-31'),
+(4, 'good experience', 6, 1, '2023-04-07'),
+(3, 'sorta slow', 6, 3, '2024-01-25'),
+(2, 'bad', 6, 5, '2024-03-28'),
+(4, 'great', 6, 7, '2024-03-13'),
+(2, 'bad', 7, 2, '2023-12-03'),
+(2, 'mean', 7, 4, '2023-12-24'),
+(3, 'mediocre', 7, 6, '2023-10-21'),
+(4, 'good condition', 7, 8, '2023-08-25'),
+(5, NULL, 8, 1, '2024-02-29'),
+(1, NULL, 8, 3, '2023-04-13'),
+(2, NULL, 8, 5, '2023-11-18'),
+(3, NULL, 8, 7, '2023-11-22');
 
 #postCreation~~~~~~~~~~~~~~~~~~~~
 INSERT INTO postCreates (post_id, image_link, content, post_date, user_id) VALUES
@@ -167,12 +196,12 @@ INSERT INTO postCreates (post_id, image_link, content, post_date, user_id) VALUE
 (4, 'http://pokeswap.com/images/greninja.jpg', 'Check this Greninja out.', '2024-02-25', 3),
 (5, 'http://pokeswap.com/images/mewtwo.jpg', 'Mewtwo EX’s design is possibly flawed!?', '2024-02-24', 4);
 
-INSERT INTO commentsWritesBelongsTo (post_id, comment_id, user_id, content, comment_date) VALUES
-(1, 1, 1, 'Such a cool card!', '2024-02-28'),
-(2, 2, 1, 'I think this is a fake!', '2024-02-27'),
-(3, 3, 2, 'Did you get scammed?', '2024-02-26'),
-(4, 4, 3, 'I completely agree.', '2024-02-25'),
-(4, 5, 4, 'I disagree with your opinion...', '2024-02-24');
+INSERT INTO commentsWritesBelongsTo (post_id, user_id, content, comment_date) VALUES
+(1, 1, 'Such a cool card!', '2024-02-28'),
+(2, 1, 'I think this is a fake!', '2024-02-27'),
+(3, 2, 'Did you get scammed?', '2024-02-26'),
+(4, 3, 'I completely agree.', '2024-02-25'),
+(4, 4, 'I disagree with your opinion...', '2024-02-24');
 
 #card creation/definitons~~~~~~~~~~~~~~~~~~~~~~~~
 INSERT INTO verifiedRatings (psa_rating, verified) VALUES
@@ -190,10 +219,18 @@ INSERT INTO verifiedRatings (psa_rating, verified) VALUES
 
 
 INSERT INTO cardType (info_id, collection) VALUES
-(3, 'BS'),
-(2, 'BS'),
 (1, 'BS'),
+(2, 'BS'),
+(3, 'BS'),
 (4, 'BS'),
+(5, 'BS'),
+(6, 'BS'),
+(7, 'BS'),
+(8, 'BS'),
+(9, 'BS'),
+(10, 'BS'),
+(100, 'BS'),
+(102, 'BS'),
 (140, 'KSS'),
 ('178','CES'),
 ('181','ASR'),
@@ -213,14 +250,36 @@ INSERT INTO pokemonTypes (pokemon, type) VALUES
 ('sylveon','fairy'),
 ('vaporeon','water'),
 ('piplup','water'),
-('porygon','normal');
+('porygon','normal'),
+('alakazam', 'psychic'),
+('blastoise','water'),
+('chansey','colorless'),
+('charizard','fire'),
+('clefairy','colorless'),
+('gyarados','water'),
+('hitmonchan','fighting'),
+('machamp','fighting'),
+('magneton','lightning'),
+('mewtwo','psychic');
+
 
 INSERT INTO pokemonCard (info_id, collection, pokemon, card_description, hp, gxcard) VALUES
 ('42','XY','pikachu','Nuzzle',60,0),
 ('239','CEC','piplup','Bubble Hold',60,0),
 ('154','UNB','porygon','Digicharge',50,0),
 ('22','AOR','vaporeon','Aqua Effect',90,0),
-('92','GRI','sylveon','Magical Ribbon',200,1);
+('92','GRI','sylveon','Magical Ribbon',200,1),
+('1','BS','alakazam','Confuse Ray','80',0),
+('2','BS','blastoise','Hydro Pump','100',0),
+('3','BS','chansey','Double-edge','120',0),
+('4','BS','charizard','Fire Spin','120',0),
+('5','BS','clefairy','Sing','40',0),
+('6','BS','gyarados','Bubblebeam','100',0),
+('7','BS','hitmonchan','Special Punch','70',0),
+('8','BS','machamp','Seismic Toss','100',0),
+('9','BS','magneton','Selfdestruct','60',0),
+('10','BS','mewtwo','Barrier','60',0);
+
 
 INSERT INTO energyCardDescriptions (`type`, card_description) VALUES
 ('lightning', NULL),
@@ -231,10 +290,10 @@ INSERT INTO energyCardDescriptions (`type`, card_description) VALUES
 
 
 INSERT INTO energyCard (info_id, collection, `type`) VALUES
-(3, 'BS', 'water'),
+(102, 'BS', 'water'),
 (95, 'EXD', 'scramble_energy'),
 (95, 'EXTRR', 'r_energy'),
-(4, 'BS', 'lightning'),
+(100, 'BS', 'lightning'),
 (140, 'KSS', 'fairy');
 
 
@@ -256,12 +315,31 @@ INSERT INTO trainerCard (info_id, collection, trainer) VALUES
 ('102','G2', 'chaos_gym'),
 ('91','FLF', 'magenetic_storm');
 
-INSERT INTO cardOwnsDescribedAs (card_id, psa_rating, date_uploaded, user_id, date_aquired, info_id, collection) VALUES
-(1, 9, '2024-03-01', 1, '2024-02-01', 1, 'BS'),
-(2, 8, '2024-03-02', 2, '2024-02-02', 4, 'BS'),
-(3, NULL, '2024-03-03', 3, '2024-02-03', 2, 'BS'),
-(4, 10, '2024-03-04', 4, '2024-02-04', 3, 'BS'),
-(5, NULL, '2024-03-05', NULL, '2024-02-05', 140, 'KSS');
+INSERT INTO cardOwnsDescribedAs (psa_rating, date_uploaded, user_id, date_aquired, info_id, collection) VALUES
+(9, '2024-03-01', 1, '2024-02-01', 1, 'BS'),
+(8, '2024-03-01', 1, '2024-02-01', 2, 'BS'),
+(6, '2024-03-01', 1, '2024-02-01', 3, 'BS'),
+(7, '2024-03-01', 1, '2024-02-01', 4, 'BS'),
+(4, '2024-03-01', 1, '2024-02-01', 5, 'BS'),
+(NULL, '2024-03-01', 1, '2024-02-01', 6, 'BS'),
+(8, '2024-03-01', 1, '2024-02-01', 7, 'BS'),
+(6, '2024-03-01', 1, '2024-02-01', 8, 'BS'),
+(NULL, '2024-03-01', 1, '2024-02-01', 9, 'BS'),
+(7, '2024-03-01', 1, '2024-02-01', 10, 'BS'),
+(10, '2024-03-01', 1, '2024-02-01', 100, 'BS'),
+(4, '2024-03-01', 1, '2024-02-01', 102, 'BS'),
+(9, '2024-03-02', 2, '2024-02-02', 4, 'BS'),
+(NULL, '2024-03-03', 1, '2024-02-03', 2, 'BS'),
+
+(10, '2024-03-04', 4, '2024-02-04', 178, 'CES'),
+(NULL, '2024-03-05', NULL, '2024-02-05', 140, 'KSS'),
+(9, '2024-03-01', 5, '2024-02-01', 181, 'ASR'),
+(8, '2024-03-02', 6, '2024-02-02', 4, 'BS'),
+(NULL, '2024-03-03', 3, '2024-02-03', 2, 'BS'),
+(10, '2024-03-04', 4, '2024-02-04', 3, 'BS'),
+(NULL, '2024-03-05', 3, '2024-02-05', 140, 'KSS');
+
+
 
 #trades~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
