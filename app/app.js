@@ -13,6 +13,7 @@ var tradeRouter = require('./routes/trade');
 var postsRouter = require('./routes/posts');
 var commentsRouter = require('./routes/comments');
 var ratingRouter = require('./routes/ratings');
+var ratesRouter = require('./routes/rates');
 var cardsRouter = require('./routes/cards');
 var cardTypesRouter = require('./routes/cardTypes');
 var mysql = require('mysql2');
@@ -25,6 +26,7 @@ app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 app.use('/cards', cardsRouter);
 app.use('/ratings', ratingRouter);
+app.use('/rates', ratesRouter);
 app.use('/cardTypes', cardTypesRouter);
 
 // connection.end()

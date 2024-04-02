@@ -57,15 +57,7 @@ async function fetchAndDisplayUsers() {
         const row = tableBody.insertRow();
         Object.values(post).forEach((field, index) => {
             const cell = row.insertCell(index);
-            if (typeof field === 'object') {
-                if (field === null) {
-                    cell.textContent = 'NULL';
-                } else {
-                    cell.textContent = field.data[0] ? 'true' : 'false';
-                }
-            } else {
-                cell.textContent = field;
-            }
+            handleField(field, cell);
         });
     });
 }
@@ -90,15 +82,7 @@ async function fetchAndDisplayRatings() {
         const row = tableBody.insertRow();
         Object.values(post).forEach((field, index) => {
             const cell = row.insertCell(index);
-            if (typeof field === 'object') {
-                if (field === null) {
-                    cell.textContent = 'NULL';
-                } else {
-                    cell.textContent = field.data[0] ? 'true' : 'false';
-                }
-            } else {
-                cell.textContent = field;
-            }
+            handleField(field, cell);
         });
     });
 }
@@ -121,15 +105,7 @@ async function fetchAndDisplayPO() {
         const row = tableBody.insertRow();
         Object.values(post).forEach((field, index) => {
             const cell = row.insertCell(index);
-            if (typeof field === 'object') {
-                if (field === null) {
-                    cell.textContent = 'NULL';
-                } else {
-                    cell.textContent = field.data[0] ? 'true' : 'false';
-                }
-            } else {
-                cell.textContent = field;
-            }
+            handleField(field, cell);
         });
     });
 }
@@ -151,15 +127,7 @@ async function fetchAndDisplayPO2() {
         const row = tableBody.insertRow();
         Object.values(post).forEach((field, index) => {
             const cell = row.insertCell(index);
-            if (typeof field === 'object') {
-                if (field === null) {
-                    cell.textContent = 'NULL';
-                } else {
-                    cell.textContent = field.data[0] ? 'true' : 'false';
-                }
-            } else {
-                cell.textContent = field;
-            }
+            handleField(field, cell);
         });
     });
 }
@@ -182,15 +150,7 @@ async function fetchAndDisplayTR() {
         const row = tableBody.insertRow();
         Object.values(post).forEach((field, index) => {
             const cell = row.insertCell(index);
-            if (typeof field === 'object') {
-                if (field === null) {
-                    cell.textContent = 'NULL';
-                } else {
-                    cell.textContent = field.data[0] ? 'true' : 'false';
-                }
-            } else {
-                cell.textContent = field;
-            }
+            handleField(field, cell);
         });
     });
 }
@@ -212,15 +172,7 @@ async function fetchAndDisplayTR2() {
         const row = tableBody.insertRow();
         Object.values(post).forEach((field, index) => {
             const cell = row.insertCell(index);
-            if (typeof field === 'object') {
-                if (field === null) {
-                    cell.textContent = 'NULL';
-                } else {
-                    cell.textContent = field.data[0] ? 'true' : 'false';
-                }
-            } else {
-                cell.textContent = field;
-            }
+            handleField(field, cell);
         });
     });
 }
@@ -243,15 +195,7 @@ async function fetchAndDisplayEN() {
         const row = tableBody.insertRow();
         Object.values(post).forEach((field, index) => {
             const cell = row.insertCell(index);
-            if (typeof field === 'object') {
-                if (field === null) {
-                    cell.textContent = 'NULL';
-                } else {
-                    cell.textContent = field.data[0] ? 'true' : 'false';
-                }
-            } else {
-                cell.textContent = field;
-            }
+            handleField(field, cell);
         });
     });
 }
@@ -273,15 +217,73 @@ async function fetchAndDisplayEN2() {
         const row = tableBody.insertRow();
         Object.values(post).forEach((field, index) => {
             const cell = row.insertCell(index);
-            if (typeof field === 'object') {
-                if (field === null) {
-                    cell.textContent = 'NULL';
-                } else {
-                    cell.textContent = field.data[0] ? 'true' : 'false';
-                }
-            } else {
-                cell.textContent = field;
-            }
+            handleField(field, cell);
+        });
+    });
+}
+
+async function fetchAndDisplayComments() {
+    const tableElement = document.getElementById('commentTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/comments', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            handleField(field, cell);
+        });
+    });
+}
+
+async function fetchAndDisplayPosts() {
+    const tableElement = document.getElementById('postTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/posts', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            handleField(field, cell);
+        });
+    });
+}
+
+async function fetchAndDisplayRates() {
+    const tableElement = document.getElementById('rateTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/rates', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            handleField(field, cell);
         });
     });
 }
@@ -386,10 +388,10 @@ async function fetchAndDisplayEN2() {
 window.onload = function() {
     checkDbConnection();
     fetchTableData();
-    document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
-    document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
-    document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
-    document.getElementById("countDemotable").addEventListener("click", countDemotable);
+    // document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
+    // document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
+    // document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
+    // document.getElementById("countDemotable").addEventListener("click", countDemotable);
 };
 
 // General function to refresh the displayed table data. 
@@ -403,7 +405,20 @@ function fetchTableData() {
     fetchAndDisplayTR2();
     fetchAndDisplayEN();
     fetchAndDisplayEN2();
-    fetchAndDisplayCards();
-    fetchAndDisplayEN2();
+    fetchAndDisplayComments();
+    fetchAndDisplayPosts();
+    fetchAndDisplayRates();
+    fetchAndDisplayTrades();
+}
 
+function handleField(field, cell) {
+    if (typeof field === 'object') {
+        if (field === null) {
+            cell.textContent = 'NULL';
+        } else {
+            cell.textContent = field.data[0] ? 'true' : 'false';
+        }
+    } else {
+        cell.textContent = field;
+    }
 }
