@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">  
+    <title>Tables</title>
+</head>
+<body>
+    <h1>Database Connection Status: 
+        <!-- An in-line placeholder to display connection status. -->
+        <span id="dbStatus"> </span>
+        <!-- A loading GIF, will be hided once get the status. -->
+        <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
+    </h1>
+
+    <br><hr><br>
+
+    <h2>users</h2>
+    <table id="userTable" border="1">
+        <thead>
+            <tr>
+                <th>user_id</th>
+                <th>email</th>
+                <th>name</th>
+                <th>phone_num</th>
+                <th>profile_visibility</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    
+    <h2>psa_ratings</h2>
+    <table id="verifiedRatingTable" border="1">
+        <thead>
+            <tr>
+                <th>psa_rating</th>
+                <th>verified</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <h2>pokemonCards</h2>
+    <table id="pokemonCardsTable" border="1">
+        <thead>
+            <tr>
+                <th>info_id</th>
+                <th>collection</th>
+                <th>pokemon</th>
+                <th>card_description</th>
+                <th>hp</th>
+                <th>gxcard</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -14,6 +14,7 @@ var postsRouter = require('./routes/posts');
 var commentsRouter = require('./routes/comments');
 var ratingRouter = require('./routes/ratings');
 var cardsRouter = require('./routes/cards');
+var cardTypesRouter = require('./routes/cardTypes');
 var mysql = require('mysql2');
 const port = 3001;
 
@@ -24,6 +25,7 @@ app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 app.use('/cards', cardsRouter);
 app.use('/ratings', ratingRouter);
+app.use('/cardTypes', cardTypesRouter);
 
 // connection.end()
 // view engine setup
@@ -47,6 +49,11 @@ connection.connect();
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/public/index.html'));
+});
+
+
+app.get('/tables/', function(req, res) {
+  res.sendFile(path.join(__dirname + '/public/tables.html'));
 });
 
 

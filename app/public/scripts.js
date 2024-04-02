@@ -87,6 +87,31 @@ async function fetchAndDisplayRatings() {
     });
 }
 
+// Fetches data from the demotable and displays it.
+async function fetchAndDisplayPokemonCards() {
+    const tableElement = document.getElementById('pokemonCardsTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/cardTypes/p', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+
+    // Always clear old, already fetched data before new fetching process.
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    });
+}
+
 // This function resets or initializes the demotable.
 async function resetUserTable() {
     const response = await fetch("/initiate-demotable", {
@@ -197,4 +222,5 @@ window.onload = function() {
 function fetchTableData() {
     fetchAndDisplayUsers();
     fetchAndDisplayRatings();
+    fetchAndDisplayPokemonCards();
 }
