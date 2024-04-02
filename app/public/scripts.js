@@ -62,6 +62,31 @@ async function fetchAndDisplayUsers() {
     });
 }
 
+// Fetches data from the demotable and displays it.
+async function fetchAndDisplayRatings() {
+    const tableElement = document.getElementById('verifiedRatingTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/ratings', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+
+    // Always clear old, already fetched data before new fetching process.
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    });
+}
+
 // This function resets or initializes the demotable.
 async function resetUserTable() {
     const response = await fetch("/initiate-demotable", {
@@ -171,4 +196,5 @@ window.onload = function() {
 // You can invoke this after any table-modifying operation to keep consistency.
 function fetchTableData() {
     fetchAndDisplayUsers();
+    fetchAndDisplayRatings();
 }
