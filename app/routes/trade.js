@@ -7,7 +7,7 @@ router.use(express.json());
 // View all trade listings
 router.get('/', async (req, res, next) => {
   try {
-    const results = await tradeService.getDB();
+    const results = await tradeService.getTrades();
 
     if (results) {
       res.send(results);
@@ -89,6 +89,23 @@ router.get('/i', async (req, res, next) => {
 
 //Included Cards
 
+//get all cards included
+
+router.get('/c', async (req, res, next) => {
+  try {
+    const results = await tradeService.getIncludedCards();
+
+    if (results) {
+      res.send(results);
+    } else {
+      res.status(404).send('No trades found');
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while fetching trades');
+  }
+})
 
 //Returns cards IDs included in trades based on trade ID, this is paired with who OWNS the card to find out which side of the trade the card belongs to
 router.get('/includedCards', async (req, res, next) => {

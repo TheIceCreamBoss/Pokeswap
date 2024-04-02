@@ -88,6 +88,56 @@ async function fetchAndDisplayRatings() {
 }
 
 // Fetches data from the demotable and displays it.
+async function fetchAndDisplayCards() {
+    const tableElement = document.getElementById('cardsTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/cards', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+
+    // Always clear old, already fetched data before new fetching process.
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            handleField(field, cell);
+        });
+    });
+}
+
+// Fetches data from the demotable and displays it.
+async function fetchAndDisplayCardType() {
+    const tableElement = document.getElementById('cardTypeTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/cardTypes', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+
+    // Always clear old, already fetched data before new fetching process.
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            handleField(field, cell);
+        });
+    });
+}
+
+// Fetches data from the demotable and displays it.
 async function fetchAndDisplayPO() {
     const tableElement = document.getElementById('table_po');
     const tableBody = tableElement.querySelector('tbody');
@@ -288,6 +338,50 @@ async function fetchAndDisplayRates() {
     });
 }
 
+async function fetchAndDisplayTrades() {
+    const tableElement = document.getElementById('tradeTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/trade', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            handleField(field, cell);
+        });
+    });
+}
+
+async function fetchAndDisplayTradeCards() {
+    const tableElement = document.getElementById('tradeCardTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/trade/c', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            handleField(field, cell);
+        });
+    });
+}
+
 // // This function resets or initializes the demotable.
 // async function resetUserTable() {
 //     const response = await fetch("/initiate-demotable", {
@@ -399,6 +493,8 @@ window.onload = function() {
 function fetchTableData() {
     fetchAndDisplayUsers();
     fetchAndDisplayRatings();
+    fetchAndDisplayCards();
+    fetchAndDisplayCardType();
     fetchAndDisplayPO();
     fetchAndDisplayPO2();
     fetchAndDisplayTR();
@@ -409,6 +505,7 @@ function fetchTableData() {
     fetchAndDisplayPosts();
     fetchAndDisplayRates();
     fetchAndDisplayTrades();
+    fetchAndDisplayTradeCards();
 }
 
 function handleField(field, cell) {

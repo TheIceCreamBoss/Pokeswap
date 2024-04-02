@@ -6,13 +6,30 @@ var connection = mysql.createConnection({
     password : process.env.DB_PASS
 });
 
+async function getAllCards() {
+    console.log('getAllCards'); 
+    return new Promise((resolve, reject) => {
+
+        connection.query('USE pokeswap');
+
+        connection.query('SELECT * FROM cardType ORDER BY collection, length(info_id), info_id', function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                resolve(results);
+            }
+        });
+    });
+}
+
 async function getEnergyCards() {
     console.log('getEnergyCards'); 
     return new Promise((resolve, reject) => {
 
         connection.query('USE pokeswap');
 
-        connection.query('SELECT * FROM energyCard', function (err, results) {
+        connection.query('SELECT * FROM energyCard ORDER BY collection, length(info_id), info_id', function (err, results) {
             if (err) {
                 reject(err);
             } else {
@@ -45,7 +62,7 @@ async function getPokemonCards() {
 
         connection.query('USE pokeswap');
 
-        connection.query('SELECT * FROM pokemonCard', function (err, results) {
+        connection.query('SELECT * FROM pokemonCard ORDER BY collection, length(info_id), info_id', function (err, results) {
             if (err) {
                 reject(err);
             } else {
@@ -77,7 +94,7 @@ async function getTrainerCards() {
 
         connection.query('USE pokeswap');
 
-        connection.query('SELECT * FROM trainerCard', function (err, results) {
+        connection.query('SELECT * FROM trainerCard ORDER BY collection, length(info_id), info_id', function (err, results) {
             if (err) {
                 reject(err);
             } else {
@@ -106,6 +123,7 @@ async function getTrainerCardDescriptions() {
 }
 
 module.exports = {
+    getAllCards,
     getEnergyCards,
     getEnergyCardDescriptions,
     getPokemonCards,

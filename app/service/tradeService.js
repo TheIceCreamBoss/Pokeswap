@@ -9,8 +9,8 @@ var connection = mysql.createConnection({
 
 
 //VIEW ALL TRADES
-async function getDB() {
-    console.log('getDB'); 
+async function getTrades() {
+    console.log('getTrades'); 
     return new Promise((resolve, reject) => {
 
         connection.query('USE pokeswap');
@@ -138,6 +138,26 @@ function verifyOwnership(card_id, trade_author_id, trade_recipient_id) {
 
 //Included Cards
 
+
+//GET ALL INCLUDED CARDS
+
+async function getIncludedCards() {
+    console.log('includedCards'); 
+    return new Promise((resolve, reject) => {
+
+        connection.query('USE pokeswap');
+
+        connection.query('SELECT * FROM includedCards ORDER BY trade_id, card_id', function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                resolve(results);
+            }
+        });
+    });
+}
+
 //Returns cards IDs included in trades based on trade ID, this needs to be paired with who OWNS the card to find out which side of the trade the card belongs to
 async function viewIncludedCards(req) {
     console.log('viewIncludedCards');
@@ -186,10 +206,10 @@ function findCardOwner(req) {
 }
 
 module.exports = {
-    getDB,
+    getTrades,
     createTrade,
     deleteTrade,
     viewTrade,
-    //includedCard
+    getIncludedCards,
     viewIncludedCards,
 }
