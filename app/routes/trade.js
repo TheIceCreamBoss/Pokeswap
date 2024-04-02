@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-//Create Trade with specified cards.
+//Create Trade with specified cards, checks if card_added belongs to either the author or recipient.
 router.post('/', async (req, res, next) => {
   //Check if required fields are present
   if (!req.body.trade_author_id || !req.body.trade_recipient_id) {
@@ -65,7 +65,7 @@ router.delete('/', async (req, res, next) => {
   }
 })
 
-// view trade based on criteria !!! Currently only trade_id
+// view trade based on trade id
 router.get('/i', async (req, res, next) => {
   try {
     const results = await tradeService.viewTrade(req);
@@ -90,7 +90,7 @@ router.get('/i', async (req, res, next) => {
 //Included Cards
 
 
-//Returns cards IDs included in trades based on trade ID, this needs to be paired with who OWNS the card to find out which side of the trade the card belongs to
+//Returns cards IDs included in trades based on trade ID, this is paired with who OWNS the card to find out which side of the trade the card belongs to
 router.get('/includedCards', async (req, res, next) => {
   try {
     const results = await tradeService.viewIncludedCards(req);
@@ -107,25 +107,6 @@ router.get('/includedCards', async (req, res, next) => {
   } catch (error) {
     console.error(error);
     res.status(500).send('An error occurred while fetching trade and related cards');
-  }
-})
-
-//Add cards owned by given recipient USER and trade creator user id into trade
-router.post('/addCards', async (req, res, next) => {
-  try {
-    const result = await tradeService.addCardsToTrade(req.body);
-
-    if (result.affectedRows > 0) {
-      console.log(result);
-      res.render('trade', { results: result });
-    } else {
-      res.status(404).send('Error adding cards to trade');
-    }
-    
-  }
-  catch (error) {
-    console.error(error);
-    res.status(500).send('An error occurred while adding cards to trade');
   }
 })
 
