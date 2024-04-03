@@ -122,6 +122,23 @@ async function getTrainerCardDescriptions() {
     });
 }
 
+async function getAllCollections() {
+    console.log('getAllCollections'); 
+    return new Promise((resolve, reject) => {
+
+        connection.query('USE pokeswap');
+
+        connection.query('SELECT DISTINCT collection FROM cardType ORDER BY collection', function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                resolve(results);
+            }
+        });
+    });
+}
+
 module.exports = {
     getAllCards,
     getEnergyCards,
@@ -129,5 +146,6 @@ module.exports = {
     getPokemonCards,
     getPokemonCardsTypes,
     getTrainerCardDescriptions,
-    getTrainerCards
+    getTrainerCards,
+    getAllCollections
 }

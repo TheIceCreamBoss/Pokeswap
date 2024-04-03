@@ -62,6 +62,9 @@ app.get('/userpage/', function(req, res) {
   res.sendFile(path.join(__dirname + '/public/userpage.html'));
 });
 
+app.get('/division/', function(req, res) {
+  res.sendFile(path.join(__dirname + '/public/division.html'));
+});
 app.get('/reviewpage/', function(req, res) {
   res.sendFile(path.join(__dirname + '/public/reviewpage.html'));
 });

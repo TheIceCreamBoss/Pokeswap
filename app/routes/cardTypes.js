@@ -115,4 +115,20 @@ router.get('/e2', async (req, res, next) => {
     }
 })
 
+// Get all Collections
+router.get('/c', async (req, res, next) => {
+    try {
+       
+        const results = await cardTypesService.getAllCollections();
+        if (results) {
+        res.send(results);
+        } else {
+        res.status(404).send('No collections found');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred while fetching collections');
+    }
+})
+
 module.exports = router;

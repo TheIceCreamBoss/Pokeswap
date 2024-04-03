@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">  
+    <title>Tables</title>
+</head>
+<body>
+    <div class="topnav">
+        <a class="active" href="/">Home</a>
+        <a href="/tables">Tables</a>
+        <a href="/userpage">Users</a>
+        <a href="/reviewpage">Reviews</a>
+        <a href="/division">Find SuperOwner</a>
+    </div>
+    <h1>Database Connection Status: 
+        <!-- An in-line placeholder to display connection status. -->
+        <span id="dbStatus"> </span>
+        <!-- A loading GIF, will be hided once get the status. -->
+        <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
+    </h1>
+
+    <br><hr><br>
+
+    <h2>Find Set Owner</h2>
+    <p>Enter an abbreviation of one of the TCG Sets..</p>
+
+
+
+    <form id="selectCollections">
+        <!-- Set Name: <input type="text" id="coll" placeholder="Enter Set Name" required> <br><br> -->
+        <div class="dropdown">
+            <h3>Set : </h3>
+            <select id="collections">
+            </select>
+        </div>
+
+        <button type="submit"> Search </button> <br>
+    </form>
+
+    <div id="userData" style="visibility: visible">
+        <h2>User Data:</h2>
+            <h3>User:</h3>
+            <table id="userView" border="1">
+                <thead>
+                    <tr>
+                        <th>user_id</th>
+                        <th>email</th>
+                        <th>name</th>
+                        <th>phone_num</th>
+                        <th>profile_visibility</th>
+                    </tr>
+                </thead> 
+                <tbody>
+                </tbody>
+            </table>
+            <!-- <h3>My Cards:</h3>
+            <table id="userCards" border="1">
+                <thead>
+                    <tr>
+                        <th>card_id</th>
+                        <th>psa_rating</th>
+                        <th>date_uploaded</th>
+                        <th>user_id</th>
+                        <th>date_aquired</th>
+                        <th>info_id</th>
+                        <th>collection</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table> -->
+            <br><br>
+        </div>
+    
+
+    <script src="division.js"></script>
+</body>
+</html>
