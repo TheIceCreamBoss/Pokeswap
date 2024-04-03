@@ -167,7 +167,7 @@ INSERT INTO ratingsRates (star_count, description, rate_author_id, rate_recipien
 (2, 'Rude and misleading', 3, 4, '2023-05-04'),
 (4, 'Decent experience', 3, 6, '2023-08-02'),
 (3, 'Okay', 3, 8, '2024-02-29'),
-(5, NULL, 4, 1, '2023-08-30'),
+(1, NULL, 4, 1, '2023-08-30'),
 (5, ':D', 4, 3, '2023-06-15'),
 (1, 'boo', 4, 5, '2023-09-10'),
 (2, 'meh', 4, 7, '2023-10-05'),
@@ -363,6 +363,7 @@ INSERT INTO includedCards (trade_id, card_id) VALUES
 (2, 21),
 (3, 17),
 (3, 15),
+(4, 11),
 (4, 11),
 (5, 17);
 

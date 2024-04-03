@@ -19,29 +19,27 @@ router.get('/', async (req, res, next) => {
     res.status(500).send('An error occurred while fetching rating');
   }
 })
+//Unused now due to changes
+// // Get average of each users rating
+// router.get('/averageRatings', async (req, res, next) => {
+//   try {
+//     const results = await ratesService.getAverages();
+//     if (results) {
+//       res.send(results);
+//     } else {
+//       res.status(404).send('No rating found');
+//     }
 
-
-
-// Get average of each users rating
-router.get('/averageRatings', async (req, res, next) => {
-  try {
-    const results = await ratesService.getAverages();
-    if (results) {
-      res.send(results);
-    } else {
-      res.status(404).send('No rating found');
-    }
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('An error occurred while fetching rating');
-  }
-})
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('An error occurred while fetching rating');
+//   }
+// })
 
 // Get average of each users rating
-router.get('/averageRatings/inequality', async (req, res, next) => {
+router.get('/averageRatings/inequalityNested', async (req, res, next) => {
   try {
-    const results = await ratesService.getAverageInequality(req);
+    const results = await ratesService.getAverageInequalityNested(req);
     if (results) {
       res.send(results);
     } else {
