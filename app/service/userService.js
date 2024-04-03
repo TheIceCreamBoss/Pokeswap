@@ -11,7 +11,6 @@ async function getDB() {
     console.log('getDB'); 
     return new Promise((resolve, reject) => {
         connection.query('USE pokeswap');
-
         connection.query('SELECT * FROM user', function (err, results) {
             if (err) {
                 reject(err);
@@ -32,6 +31,7 @@ async function createUser(req) {
         //Sanitization, ? handles escaping of special characters
         const query = 'INSERT INTO user (email, name, phone_num, profile_visibility) VALUES (?, ?, ?, ?)';
         const values = [req.email, req.name, req.phone_num, req.profile_visibility];
+
         connection.query(query, values, function (err, results) {
             if (err) {
                 reject(err);

@@ -46,7 +46,7 @@ async function getAverageInequalityNested(req) {
     console.log('get average'); 
     return new Promise((resolve, reject) => {
         connection.query('USE pokeswap');
-        connection.query('SELECT rate_recipient_id AS "User ID", AVG(star_count) AS "Average Rating out of 5" FROM ratingsRates GROUP BY rate_recipient_id HAVING AVG(star_count) ' + req.body.inequality + ' (SELECT AVG(star_count) FROM ratingsRates)', function (err, results) {
+        connection.query('SELECT rate_recipient_id AS "User ID", AVG(star_count) AS "Average Rating out of 5" FROM ratingsRates GROUP BY rate_recipient_id HAVING AVG(star_count) ' + req.headers.inequality + ' (SELECT AVG(star_count) FROM ratingsRates)', function (err, results) {
             if (err) {
                 reject(err);
             } else {

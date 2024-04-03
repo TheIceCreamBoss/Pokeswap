@@ -424,6 +424,44 @@ async function signup(event) {
     }
 }
 
+// nested aggre
+async function fetchAndDisplayAboveAverage(event) {
+    event.preventDefault();
+    var inq = document.getElementById('ineq').value;
+    console.log('hi :3');
+
+    if (inq == "geq") {
+        inq = ">=";
+    } else if (inq == "eq") {
+        inq = "=";
+    } else {
+        inq = "<=";
+    }
+
+    const tableElement = document.getElementById('aboveAverageTable');
+    const tableBody = tableElement.querySelector('tbody');
+    console.log(inq);
+    const response = await fetch('/rates/averageRatings/inequalityNested', {
+        method: 'GET',
+        headers: {
+            inequality: inq
+        }
+    });
+
+    const responseData = await response.json();
+
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            handleField(field, cell);
+        });
+    });
+}
+
 // // This function resets or initializes the demotable.
 // async function resetUserTable() {
 //     const response = await fetch("/initiate-demotable", {
@@ -503,11 +541,10 @@ window.onload = function() {
     console.log('window.onload has been called');
     checkDbConnection();
     fetchTableData();
-    //document.getElementById("showTables").addEventListener("click", showTables);
     document.getElementById("userSignUp").addEventListener("submit", signup);
     document.getElementById("userLogin").addEventListener("submit", login);
-
-    // document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
+    document.getElementById("filter").addEventListener("submit", fetchAndDisplayAboveAverage);
+    // document.getElementById("userLoginresetDemotable").addEventListener("click", resetDemotable);
     // document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     // document.getElementById("countDemotable").addEventListener("click", countDemotable);
 };
