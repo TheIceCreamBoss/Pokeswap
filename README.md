@@ -3,4 +3,4 @@ Pokéswap is a database designed to streamline the trading experience for Pokém
 
 Setup Instructions : Start MySQL Server locally, call npm run start / node app.js, and see output on localhost:3000
 
-Test
+Start MySQL : mysql -u root -p    
