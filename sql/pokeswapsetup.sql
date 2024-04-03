@@ -13,7 +13,7 @@ CREATE TABLE `user` (
   phone_num char(10), 
   profile_visibility bit NOT NULL DEFAULT 1,
   CONSTRAINT `chk_email_format` CHECK (email REGEXP '^.+@.+\\..+$'),
-  CONSTRAINT `chk_phone_length` CHECK (CHAR_LENGTH(phone_num) = 10 AND phone_num REGEXP '^[0-9]+$')
+  CONSTRAINT `chk_phone_length` CHECK (CHAR_LENGTH(phone_num) = 0 OR CHAR_LENGTH(phone_num) = 10 AND phone_num REGEXP '^[0-9]+$')
 );
 
 #userrating~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
