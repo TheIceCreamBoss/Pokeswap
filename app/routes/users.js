@@ -120,6 +120,22 @@ router.get('/i/', async (req, res, next) => {
   }
 })
 
+router.get('/id/', async (req, res, next) => {
+  try {
+    const results = await userService.getAllIDs();
+
+    if (results) {
+      res.send(results);
+    } else {
+      res.status(404).send('No users found');
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while fetching users');
+  }
+})
+
 router.get('/groupByPSA/', async (req, res, next) => {
   //Check if json is missing ID
   if (!req.body.user_id) {

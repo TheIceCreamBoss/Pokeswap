@@ -14,10 +14,44 @@
         <a class="active" href="/reviewpage">Reviews</a>
     </div>
     <br>
+    <h2>Add a review:</h2>
+    <form id="addReview">
+        star_count: <select id="numStars">
+                        <option value=1>1</option>
+                        <option value=2>2</option>
+                        <option value=3>3</option>
+                        <option value=4>4</option>
+                        <option value=5>5</option>
+                    </select> 
+                    <br>
+        description: <input type="text" id="insertDescription" placeholder="Enter Description" maxlength="200"> <br>
+        rate_author_id: <select id="rateAuthorSelect">
+                        </select> <br>
+        rate_recipient_id: <select id="rateRecipientSelect">
+                        </select> 
+        <br><br>
+        <button type="submit">Add</button>
+    </form>
     <br>
-    <h2>Find users that are below, above, or equal to the average rating.</h2>
+    <h2>Review Table</h2>
+    <table id="rateTable" border="1">
+        <thead>
+            <tr>
+                <th>rate_id</th>
+                <th>star_count</th>
+                <th>description</th>
+                <th>rate_author_id</th>
+                <th>rate_recipient_id</th>
+                <th>rate_date</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <h2>Find users that are below, above, or equal to the average rating of:</h2>
+    <h2 id="averageRatingNow"></h2>
     <form id="filter">
-        <select name="lol" id="ineq">
+        <select id="ineq">
             <option value="geq">>=</option>
             <option value="eq">=</option>
             <option value="leq"> &lt;= </option>
