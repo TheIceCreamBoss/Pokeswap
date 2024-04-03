@@ -23,19 +23,15 @@ router.get('/', async (req, res, next) => {
 // Create user
 router.post('/', async (req, res, next) => {
 //Check if required fields are present
-  if (!req.body.email || !req.body.profile_visibility) {
+  if (!req.body.email || (req.body.profile_visibility === null)) {
     return res.status(400).send('Missing required user details');
   }
-  //replace empty fields with placeholder
-  req.body.name = req.body.name || "N/A";
-  req.body.phone_num = req.body.phone_num || "n/a";
-
   try {
     const result = await userService.createUser(req.body);
 
     if (result) {
       console.log(result);
-      res.send(result);
+      res.send({ message: 'User updated successfully' });
     } else {
       res.status(404).send('Error inserting new user');
     }
@@ -96,20 +92,21 @@ router.delete('/', async (req, res, next) => {
 
 //View User(s) based off criteria
 // !!! Needs to be able to filter based off different criteria
+
 router.get('/i/', async (req, res, next) => {
-  //Check if json is missing ID
-  if (!req.body.user_id) {
-    return res.status(404).send('Specified ID is missing');
+  //Check if json is email
+  if (!req.body.email) {
+    return res.status(404).send('Email is missing');
   }
 
   try {
-    console.log("attempting to view user with id " + req.body.user_id);
+    console.log("attempting to view user with email " + req.body.email);
     const result = await userService.viewUser(req);
     
     //Check if results is empty
     if (result.length === 0) {
       console.log("user search returned empty")
-      res.status(404).send('User with specified ID is not found');
+      res.status(404).send('User with specified Email is not found');
     } else if (result) {
       res.send(result);
     } else {
