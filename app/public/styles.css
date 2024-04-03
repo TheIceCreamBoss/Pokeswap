@@ -116,3 +116,7 @@ input::placeholder, textarea::placeholder {
   background-color: rgb(22, 87, 207);
   color: white;
 }
+
+.dropDown {
+  display : flex;
+}

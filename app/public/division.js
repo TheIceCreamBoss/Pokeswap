@@ -12,6 +12,8 @@
  * 
  */
 
+// const { getSuperUsers } = require("../service/userService");
+
 
 // nested aggre
 async function fetchAndDisplaySuperUsers(event) {
@@ -20,19 +22,18 @@ async function fetchAndDisplaySuperUsers(event) {
     console.log(coll);
 
 
-    if (inq == "geq") {
-        inq = ">=";
-    } else if (inq == "eq") {
-        inq = "=";
-    } else {
-        inq = "<=";
-    }
+    // if (inq == "geq") {
+    //     inq = ">=";
+    // } else if (inq == "eq") {
+    //     inq = "=";
+    // } else {
+    //     inq = "<=";
+    // }
 
     const tableElement = document.getElementById('userView');
     const tableBody = tableElement.querySelector('tbody');
-    console.log(inq);
 
-    const response = await fetch('/rates/users/getSuperUsers', {
+    const response = await fetch('/users/getSuperUsers', {
         method: 'GET',
         headers: {
             collection: coll
@@ -62,6 +63,8 @@ async function getCollections() {
     const coll = document.getElementById('collections');
     responseData.forEach(post => {
         const option = document.createElement('option');
+        //give options an "options" class
+        option.className = "dropdown-content";
         option.value = post.collection;
         option.text = post.collection;
         coll.appendChild(option);
@@ -101,7 +104,7 @@ window.onload = function() {
     console.log('window.onload has been called');
     fetchAndDisplayUsers();
     getCollections();
-    document.getElementById("filter").addEventListener("submit", fetchAndDisplayAboveAverage);
+    document.getElementById("selectCollections").addEventListener("submit", fetchAndDisplaySuperUsers);
 };
 
 
