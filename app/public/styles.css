@@ -5,7 +5,7 @@ body {
   max-width: 800px;
   margin: auto;
   line-height: 1.6;
-  background-color: #62dc62f9;
+  background-color: #fffef5f9;
   color: #313131;
 }
 
@@ -43,7 +43,7 @@ tr:hover {
 }
 
 button {
-  background-color: rgb(227, 32, 103);
+  background-color: rgb(32, 107, 227);;
   color: #fff;
   padding: 10px 20px;
   font-size: 16px;
