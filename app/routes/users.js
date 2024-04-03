@@ -31,7 +31,7 @@ router.post('/', async (req, res, next) => {
 
     if (result) {
       console.log(result);
-      res.send({ message: 'User updated successfully' });
+      res.send({ message: 'User updated successfully', success: true });
     } else {
       res.status(404).send('Error inserting new user');
     }
