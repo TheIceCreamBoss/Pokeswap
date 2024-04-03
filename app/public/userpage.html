@@ -79,6 +79,31 @@
             </tbody>
         </table>
         <br><br>
+        <h3>My Verified Cards Grouped By Collection:</h3>
+        <form id="havingSelection">
+            <select id="havingIneq">
+                <option value="none"> No Filter</option>
+                <option value=">=">>=</option>
+                <option value="=">=</option>
+                <option value="&lt;="> &lt;= </option>
+            </select>
+            <br>
+            Number: <input type="number" id="havingNum" placeholder="#" maxlength="10"> <br>
+            <button type="submit">Query</button>
+            <br>
+            <br>
+        </form>
+        <table id="psaGroupTable" border="1">
+            <thead>
+                <tr>
+                    <th>Collection</th>
+                    <th>Number of Verified Cards</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <br><br>
         <form id="userDelete">
             <button type="submit"> Delete My Account </button>
             <br><br>

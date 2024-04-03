@@ -143,7 +143,7 @@ async function groupByPSA(req) {
     return new Promise((resolve, reject) => {
        
         //obtain user_id from req body
-        const user_id = req.body.user_id;
+        const user_id = req.headers.user_id;
         
         connection.query('USE pokeswap');
         connection.query('SELECT cODA.collection, COUNT(cODA.psa_rating) AS "Amount of verified cards" FROM user u, cardOwnsDescribedAs cODA WHERE u.user_id = ? AND u.user_id = cODA.user_id GROUP BY cODA.collection', user_id, function (err, results) {
@@ -162,10 +162,10 @@ async function groupByPSAHaving(req) {
     return new Promise((resolve, reject) => {
        
         //obtain user_id from req body
-        const user_id = req.body.user_id;
+        const user_id = req.headers.user_id;
         
         connection.query('USE pokeswap');
-        connection.query('SELECT cODA.collection, COUNT(cODA.psa_rating) AS "Amount of verified cards" FROM user u, cardOwnsDescribedAs cODA WHERE u.user_id = ? AND u.user_id = cODA.user_id GROUP BY cODA.collection HAVING COUNT(cODA.psa_rating) ' + req.body.inequality + ' ' + req.body.filter, user_id, function (err, results) {
+        connection.query('SELECT cODA.collection, COUNT(cODA.psa_rating) AS "Amount of verified cards" FROM user u, cardOwnsDescribedAs cODA WHERE u.user_id = ? AND u.user_id = cODA.user_id GROUP BY cODA.collection HAVING COUNT(cODA.psa_rating) ' + req.headers.inequality + ' ' + req.headers.filter, user_id, function (err, results) {
             if (err) {
                 reject(err);
             } else {

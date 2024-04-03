@@ -121,6 +121,61 @@ async function deleteUser(event) {
     }
 }
 
+async function havingQuery(event) {
+    event.preventDefault();
+    const ineq = document.getElementById('havingIneq').value;
+    const num = document.getElementById('havingNum').value;
+    const psaTable = document.getElementById('psaGroupTable');
+    const psaTableBody = psaTable.querySelector('tbody');
+
+    if (ineq == "none") {
+        const psaRes = await fetch('/users/groupByPSA', {
+            method: 'GET',
+            headers: {
+                user_id: global_id
+            }
+        });
+    
+        const psaResData = await psaRes.json();
+    
+        // Always clear old, already fetched data before new fetching process.
+        if (psaTableBody) {
+            psaTableBody.innerHTML = '';
+        }
+    
+        psaResData.forEach(post => {
+            const row = psaTableBody.insertRow();
+            Object.values(post).forEach((field, index) => {
+                const cell = row.insertCell(index);
+                handleField(field, cell);
+            });
+        });
+    } else {
+        const psaRes = await fetch('/users/groupByPSAHaving', {
+            method: 'GET',
+            headers: {
+                user_id: global_id,
+                inequality: ineq,
+                filter: num
+            }
+        });
+
+        const psaResData = await psaRes.json();
+
+        // Always clear old, already fetched data before new fetching process.
+        if (psaTableBody) {
+            psaTableBody.innerHTML = '';
+        }
+
+        psaResData.forEach(post => {
+            const row = psaTableBody.insertRow();
+            Object.values(post).forEach((field, index) => {
+                const cell = row.insertCell(index);
+                handleField(field, cell);
+            });
+        });
+    }
+}
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
 // Add or remove event listeners based on the desired functionalities.
@@ -131,6 +186,7 @@ window.onload = function() {
     document.getElementById("userSignUp").addEventListener("submit", signup);
     document.getElementById("userLogin").addEventListener("submit", login);
     document.getElementById("userDelete").addEventListener("submit", deleteUser);
+    document.getElementById("havingSelection").addEventListener("submit", havingQuery);
 };
 
 // General function to refresh the displayed table data. 
@@ -175,6 +231,31 @@ async function showUserData(user_id) {
 
     responseData2.forEach(post => {
         const row = tableBody2.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            handleField(field, cell);
+        });
+    });
+
+    const psaTable = document.getElementById('psaGroupTable');
+    const psaTableBody = psaTable.querySelector('tbody');
+
+    const psaRes = await fetch('/users/groupByPSA', {
+        method: 'GET',
+        headers: {
+            user_id: global_id
+        }
+    });
+
+    const psaResData = await psaRes.json();
+
+    // Always clear old, already fetched data before new fetching process.
+    if (psaTableBody) {
+        psaTableBody.innerHTML = '';
+    }
+
+    psaResData.forEach(post => {
+        const row = psaTableBody.insertRow();
         Object.values(post).forEach((field, index) => {
             const cell = row.insertCell(index);
             handleField(field, cell);

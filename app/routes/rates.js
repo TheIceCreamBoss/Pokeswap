@@ -24,8 +24,8 @@ router.get('/', async (req, res, next) => {
 // create views
 router.post('/', async (req, res, next) => {
   //Check if required fields are present
-    if (!req.body.star_count || !req.body.rate_author_id || !req.body.rate_recipient_id) {
-      return res.status(400).send('Missing required details');
+    if (!req.body.star_count || !req.body.rate_author_id || !req.body.rate_recipient_id || (req.body.rate_recipient_id == req.body.rate_author_id)) {
+      return res.status(400).send('Missing required details or author and recipient same id');
     }
     if (req.body.description == "") req.body.description = null;
     req.body.rate_date = new Date();
