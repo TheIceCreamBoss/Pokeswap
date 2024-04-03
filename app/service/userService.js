@@ -8,10 +8,24 @@ var connection = mysql.createConnection({
 
 //VIEW ALL USERS
 async function getDB() {
-    console.log('getDB'); 
     return new Promise((resolve, reject) => {
         connection.query('USE pokeswap');
         connection.query('SELECT * FROM user', function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                resolve(results);
+            }
+        });
+    });
+}
+
+//VIEW ALL USERS IDS
+async function getUserIDs() {
+    return new Promise((resolve, reject) => {
+        connection.query('USE pokeswap');
+        connection.query('SELECT user_id FROM user', function (err, results) {
             if (err) {
                 reject(err);
             } else {
@@ -184,6 +198,7 @@ async function getSuperUsers(req) {
 
 module.exports = {
     getDB,
+    getUserIDs,
     createUser,
     updateUser,
     deleteUser,
