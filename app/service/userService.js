@@ -112,7 +112,7 @@ async function viewUser(req) {
         const user_id = req.body.user_id;
         
         connection.query('USE pokeswap');
-        connection.query('SELECT * FROM user WHERE user_id = ?', user_id, function (err, results) {
+        connection.query('SELECT * FROM user WHERE email = ?', email, function (err, results) {
             if (err) {
                 reject(err);
             } else {

@@ -23,19 +23,15 @@ router.get('/', async (req, res, next) => {
 // Create user
 router.post('/', async (req, res, next) => {
 //Check if required fields are present
-  if (!req.body.email || !req.body.profile_visibility) {
+  if (!req.body.email || (req.body.profile_visibility === null)) {
     return res.status(400).send('Missing required user details');
   }
-  //replace empty fields with placeholder
-  req.body.name = req.body.name || "N/A";
-  req.body.phone_num = req.body.phone_num || "n/a";
-
   try {
     const result = await userService.createUser(req.body);
 
     if (result) {
       console.log(result);
-      res.send(result);
+      res.send({ message: 'User updated successfully' });
     } else {
       res.status(404).send('Error inserting new user');
     }

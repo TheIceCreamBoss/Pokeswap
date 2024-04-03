@@ -37,7 +37,7 @@ async function checkDbConnection() {
     });
 }
 
-// Fetches data from the demotable and displays it.
+// Fetches and Display Functions
 async function fetchAndDisplayUsers() {
     const tableElement = document.getElementById('userTable');
     const tableBody = tableElement.querySelector('tbody');
@@ -61,8 +61,6 @@ async function fetchAndDisplayUsers() {
         });
     });
 }
-
-// Fetches data from the demotable and displays it.
 async function fetchAndDisplayRatings() {
     const tableElement = document.getElementById('verifiedRatingTable');
     const tableBody = tableElement.querySelector('tbody');
@@ -86,8 +84,6 @@ async function fetchAndDisplayRatings() {
         });
     });
 }
-
-// Fetches data from the demotable and displays it.
 async function fetchAndDisplayCards() {
     const tableElement = document.getElementById('cardsTable');
     const tableBody = tableElement.querySelector('tbody');
@@ -111,8 +107,6 @@ async function fetchAndDisplayCards() {
         });
     });
 }
-
-// Fetches data from the demotable and displays it.
 async function fetchAndDisplayCardType() {
     const tableElement = document.getElementById('cardTypeTable');
     const tableBody = tableElement.querySelector('tbody');
@@ -136,8 +130,6 @@ async function fetchAndDisplayCardType() {
         });
     });
 }
-
-// Fetches data from the demotable and displays it.
 async function fetchAndDisplayPO() {
     const tableElement = document.getElementById('table_po');
     const tableBody = tableElement.querySelector('tbody');
@@ -159,7 +151,6 @@ async function fetchAndDisplayPO() {
         });
     });
 }
-
 async function fetchAndDisplayPO2() {
     const tableElement = document.getElementById('table_po2');
     const tableBody = tableElement.querySelector('tbody');
@@ -181,8 +172,6 @@ async function fetchAndDisplayPO2() {
         });
     });
 }
-
-// Fetches data from the demotable and displays it.
 async function fetchAndDisplayTR() {
     const tableElement = document.getElementById('table_tr');
     const tableBody = tableElement.querySelector('tbody');
@@ -204,7 +193,6 @@ async function fetchAndDisplayTR() {
         });
     });
 }
-
 async function fetchAndDisplayTR2() {
     const tableElement = document.getElementById('table_tr2');
     const tableBody = tableElement.querySelector('tbody');
@@ -226,8 +214,6 @@ async function fetchAndDisplayTR2() {
         });
     });
 }
-
-// Fetches data from the demotable and displays it.
 async function fetchAndDisplayEN() {
     const tableElement = document.getElementById('table_en');
     const tableBody = tableElement.querySelector('tbody');
@@ -249,7 +235,6 @@ async function fetchAndDisplayEN() {
         });
     });
 }
-
 async function fetchAndDisplayEN2() {
     const tableElement = document.getElementById('table_en2');
     const tableBody = tableElement.querySelector('tbody');
@@ -271,7 +256,6 @@ async function fetchAndDisplayEN2() {
         });
     });
 }
-
 async function fetchAndDisplayComments() {
     const tableElement = document.getElementById('commentTable');
     const tableBody = tableElement.querySelector('tbody');
@@ -293,7 +277,6 @@ async function fetchAndDisplayComments() {
         });
     });
 }
-
 async function fetchAndDisplayPosts() {
     const tableElement = document.getElementById('postTable');
     const tableBody = tableElement.querySelector('tbody');
@@ -315,7 +298,6 @@ async function fetchAndDisplayPosts() {
         });
     });
 }
-
 async function fetchAndDisplayRates() {
     const tableElement = document.getElementById('rateTable');
     const tableBody = tableElement.querySelector('tbody');
@@ -337,7 +319,6 @@ async function fetchAndDisplayRates() {
         });
     });
 }
-
 async function fetchAndDisplayTrades() {
     const tableElement = document.getElementById('tradeTable');
     const tableBody = tableElement.querySelector('tbody');
@@ -359,7 +340,6 @@ async function fetchAndDisplayTrades() {
         });
     });
 }
-
 async function fetchAndDisplayTradeCards() {
     const tableElement = document.getElementById('tradeCardTable');
     const tableBody = tableElement.querySelector('tbody');
@@ -380,6 +360,66 @@ async function fetchAndDisplayTradeCards() {
             handleField(field, cell);
         });
     });
+}
+
+// Login to specified User
+// async function login(event) {
+//     event.preventDefault();
+//     const emailValue = document.getElementById('insertLoginEmail').value;
+//     const response = await fetch('/users/i', {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             email: emailValue,
+//         })
+//     });
+//     const responseData = await response.json();
+//     if (responseData.success) {
+//         if (tableBody) {
+//             tableBody.innerHTML = '';
+//         }
+//         responseData.forEach(post => {
+//             const row = tableBody.insertRow();
+//             Object.values(post).forEach((field, index) => {
+//                 const cell = row.insertCell(index);
+//                 handleField(field, cell);
+//             });
+//         });
+//     } else {
+//         messageElement.textContent = "Error finding user.";
+//     }
+// }
+
+//sign up
+async function signup(event) {
+    event.preventDefault();
+    const emailValue = document.getElementById('insertEmail').value;
+    const nameValue = document.getElementById('insertName').value;
+    const phoneValue = document.getElementById('insertPhone').value;
+    const visValue = document.getElementById('insertVisibility').value;
+
+    const boolVal = visValue ? 1 : 0;
+
+    const response = await fetch('/users', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email: emailValue,
+            name: nameValue,
+            phone_num: phoneValue,
+            profile_visibility: boolVal
+        })
+    });
+    const responseData = await response.json();
+    fetchTableData();
+    document.getElementById('insertEmail').value = "";
+    document.getElementById('insertName').value = "";
+    document.getElementById('insertPhone').value = "";
+    document.getElementById('insertVisibility').checked = false;
 }
 
 // // This function resets or initializes the demotable.
@@ -475,6 +515,7 @@ async function showTables(event) {
 window.onload = function() {
     checkDbConnection();
     fetchTableData();
+    document.getElementById("userSignUp").addEventListener("submit", signup);
     // document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("showTables").addEventListener("click", showTables);
     // document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
