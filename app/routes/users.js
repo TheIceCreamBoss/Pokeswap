@@ -93,19 +93,20 @@ router.delete('/', async (req, res, next) => {
 //View User(s) based off criteria
 //Needs to be able to filter based off different criteria
 router.get('/i/', async (req, res, next) => {
+  const email = JSON.stringify(req.headers.email);
   //Check if json is missing ID
-  if (!req.body.user_id) {
-    return res.status(404).send('Specified ID is missing');
+  if (!email) {
+    return res.status(404).send('Specified email is missing');
   }
 
   try {
-    console.log("attempting to view user with id " + req.body.user_id);
+    console.log("attempting to view user with email " + email);
     const result = await userService.viewUser(req);
     
     //Check if results is empty
     if (result.length === 0) {
       console.log("user search returned empty")
-      res.status(404).send('User with specified ID is not found');
+      res.status(404).send('User with specified email is not found');
     } else if (result) {
       res.send(result);
     } else {

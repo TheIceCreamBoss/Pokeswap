@@ -109,7 +109,8 @@ async function viewUser(req) {
     return new Promise((resolve, reject) => {
        
         //obtain user_id from req body
-        const user_id = req.body.user_id;
+        const email = req.headers.email;
+        console.log(email);
         
         connection.query('USE pokeswap');
         connection.query('SELECT * FROM user WHERE email = ?', email, function (err, results) {

@@ -363,34 +363,29 @@ async function fetchAndDisplayTradeCards() {
 }
 
 // Login to specified User
-// async function login(event) {
-//     event.preventDefault();
-//     const emailValue = document.getElementById('insertLoginEmail').value;
-//     const response = await fetch('/users/i', {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             email: emailValue,
-//         })
-//     });
-//     const responseData = await response.json();
-//     if (responseData.success) {
-//         if (tableBody) {
-//             tableBody.innerHTML = '';
-//         }
-//         responseData.forEach(post => {
-//             const row = tableBody.insertRow();
-//             Object.values(post).forEach((field, index) => {
-//                 const cell = row.insertCell(index);
-//                 handleField(field, cell);
-//             });
-//         });
-//     } else {
-//         messageElement.textContent = "Error finding user.";
-//     }
-// }
+async function login(event) {
+    event.preventDefault();
+    const tableElement = document.getElementById('loginTable');
+    const tableBody = tableElement.querySelector('tbody');
+    const emailValue = document.getElementById('loginEmail').value;
+    const response = await fetch('/users/i', {
+        method: 'GET',
+        headers: {
+            email: emailValue
+        }
+    });
+    const responseData = await response.json();
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            handleField(field, cell);
+        });
+    });
+}
 
 //sign up
 async function signup(event) {
@@ -516,8 +511,8 @@ window.onload = function() {
     checkDbConnection();
     fetchTableData();
     document.getElementById("userSignUp").addEventListener("submit", signup);
+    document.getElementById("userLogin").addEventListener("submit", login);
     // document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
-    document.getElementById("showTables").addEventListener("click", showTables);
     // document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     // document.getElementById("countDemotable").addEventListener("click", countDemotable);
 };
