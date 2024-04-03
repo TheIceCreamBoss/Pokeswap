@@ -95,7 +95,7 @@ router.delete('/', async (req, res, next) => {
 })
 
 //View User(s) based off criteria
-// !!! Needs to be able to filter based off different criteria
+//Needs to be able to filter based off different criteria
 router.get('/i/', async (req, res, next) => {
   //Check if json is missing ID
   if (!req.body.user_id) {
@@ -120,5 +120,55 @@ router.get('/i/', async (req, res, next) => {
     res.status(500).send('An error occurred while specified user');
   }
 })
+
+router.get('/groupByPSA/', async (req, res, next) => {
+  //Check if json is missing ID
+  if (!req.body.user_id) {
+    return res.status(404).send('Specified ID is missing');
+  }
+
+  try {
+    console.log("attempting to find count of cards owned sorted by psa_rating user with id " + req.body.user_id);
+    const result = await userService.groupByPSA(req);
+    //Check if results is empty
+    if (result.length === 0) {
+      console.log("user search returned empty")
+      res.status(404).send('Cards associated with specified ID is not found');
+    } else if (result) {
+      res.send(result);
+    } else {
+      res.status(404).send('User not found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while specified user');
+  }
+})
+
+
+router.get('/groupByPSAHaving/', async (req, res, next) => {
+  //Check if json is missing ID
+  if (!req.body.user_id) {
+    return res.status(404).send('Specified ID is missing');
+  }
+
+  try {
+    console.log("attempting to find count of cards owned sorted by psa_rating user with id " + req.body.user_id + " with HAVING constraint");
+    const result = await userService.groupByPSAHaving(req);
+    //Check if results is empty
+    if (result.length === 0) {
+      console.log("card search returned empty")
+      res.status(404).send('Cards associated with specified ID with HAVING constraint is not found');
+    } else if (result) {
+      res.send(result);
+    } else {
+      res.status(404).send('User not found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while specified user');
+  }
+})
+
 
 module.exports = router;
