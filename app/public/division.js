@@ -16,7 +16,8 @@
 // nested aggre
 async function fetchAndDisplaySuperUsers(event) {
     event.preventDefault();
-    var coll = document.getElementById('coll').value;
+    var coll = document.getElementById('collections').value;
+    console.log(coll);
 
 
     if (inq == "geq") {
@@ -52,6 +53,21 @@ async function fetchAndDisplaySuperUsers(event) {
     });
 }
 
+async function getCollections() {
+    const response = await fetch('/cardTypes/c', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+    const coll = document.getElementById('collections');
+    responseData.forEach(post => {
+        const option = document.createElement('option');
+        option.value = post.collection;
+        option.text = post.collection;
+        coll.appendChild(option);
+    });
+}
+
 // Fetches and Display Functions
 async function fetchAndDisplayUsers() {
     const tableElement = document.getElementById('userView');
@@ -84,6 +100,7 @@ async function fetchAndDisplayUsers() {
 window.onload = function() {
     console.log('window.onload has been called');
     fetchAndDisplayUsers();
+    getCollections();
     document.getElementById("filter").addEventListener("submit", fetchAndDisplayAboveAverage);
 };
 
