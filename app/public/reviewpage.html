@@ -7,6 +7,14 @@
     <title>Reviews</title>
 </head>
 <body>
+    <div class="topnav">
+        <a href="/">Home</a>
+        <a href="/tables">Tables</a>
+        <a href="/userpage">Users</a>
+        <a class="active" href="/reviewpage">Reviews</a>
+    </div>
+    <br>
+    <br>
     <h2>Find users that are below, above, or equal to the average rating.</h2>
     <form id="filter">
         <select name="lol" id="ineq">
@@ -14,6 +22,7 @@
             <option value="eq">=</option>
             <option value="leq"> &lt;= </option>
         </select>
+        <br>
         <button type="submit">Query</button>
     </form>
     
