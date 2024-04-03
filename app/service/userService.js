@@ -11,7 +11,6 @@ async function getDB() {
     console.log('getDB'); 
     return new Promise((resolve, reject) => {
         connection.query('USE pokeswap');
-
         connection.query('SELECT * FROM user', function (err, results) {
             if (err) {
                 reject(err);
@@ -32,6 +31,7 @@ async function createUser(req) {
         //Sanitization, ? handles escaping of special characters
         const query = 'INSERT INTO user (email, name, phone_num, profile_visibility) VALUES (?, ?, ?, ?)';
         const values = [req.email, req.name, req.phone_num, req.profile_visibility];
+
         connection.query(query, values, function (err, results) {
             if (err) {
                 reject(err);
@@ -42,7 +42,7 @@ async function createUser(req) {
         });
     });
 }
-2
+
 //UPDATE USER
 async function updateUser(req) {
     console.log('updateUser'); 
@@ -162,6 +162,21 @@ async function groupByPSAHaving(req) {
     });
 }
 
+async function getSuperUsers(req) {
+    console.log('getSuperUsers'); 
+    return new Promise((resolve, reject) => {
+      
+        connection.query('USE pokeswap');
+        connection.query('SELECT * FROM user u WHERE NOT EXISTS (SELECT * FROM cardType cT WHERE cT.collection = ? AND NOT EXISTS (SELECT * FROM cardOwnsDescribedAs cODA WHERE u.user_id = cODA.user_id AND cT.info_id = cODA.info_id AND cT.collection = cODA.collection))', req.headers.collection, function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                resolve(results);
+            }
+        });
+    });
+}
 
 
 
@@ -174,5 +189,6 @@ module.exports = {
     deleteUser,
     viewUser,
     groupByPSA,
-    groupByPSAHaving
+    groupByPSAHaving,
+    getSuperUsers
 }

@@ -13,7 +13,7 @@ CREATE TABLE `user` (
   phone_num char(10), 
   profile_visibility bit NOT NULL DEFAULT 1,
   CONSTRAINT `chk_email_format` CHECK (email REGEXP '^.+@.+\\..+$'),
-  CONSTRAINT `chk_phone_length` CHECK (CHAR_LENGTH(phone_num) = 10 AND phone_num REGEXP '^[0-9]+$')
+  CONSTRAINT `chk_phone_length` CHECK (CHAR_LENGTH(phone_num) = 0 OR CHAR_LENGTH(phone_num) = 10 AND phone_num REGEXP '^[0-9]+$')
 );
 
 #userrating~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -243,6 +243,7 @@ INSERT INTO cardType (info_id, collection) VALUES
 ('22','AOR'),
 ('92','GRI'),
 (95, 'EXD'),
+(3, 'XY'),
 (95, 'EXTRR');
 
 INSERT INTO pokemonTypes (pokemon, type) VALUES
@@ -260,7 +261,8 @@ INSERT INTO pokemonTypes (pokemon, type) VALUES
 ('hitmonchan','fighting'),
 ('machamp','fighting'),
 ('magneton','lightning'),
-('mewtwo','psychic');
+('mewtwo','psychic'),
+('weedle','grass');
 
 
 INSERT INTO pokemonCard (info_id, collection, pokemon, card_description, hp, gxcard) VALUES
@@ -338,7 +340,9 @@ INSERT INTO cardOwnsDescribedAs (psa_rating, date_uploaded, user_id, date_aquire
 (NULL, '2024-03-03', 2, '2024-02-03', 154, 'UNB'),
 (10, '2024-03-04', 4, '2024-02-04', 3, 'BS'),
 #^20
-(NULL, '2024-03-05', 3, '2024-02-05', 42, 'XY');
+(NULL, '2024-03-05', 3, '2024-02-05', 42, 'XY'),
+(NULL, '2024-03-05', 1, '2024-02-05', 42, 'XY'),
+(8, '2024-03-05', 3, '2024-02-05', 3, 'XY');
 
 
 
@@ -363,7 +367,6 @@ INSERT INTO includedCards (trade_id, card_id) VALUES
 (2, 21),
 (3, 17),
 (3, 15),
-(4, 11),
 (4, 11),
 (5, 17);
 

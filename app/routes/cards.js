@@ -109,4 +109,29 @@ router.get('/o', async (req, res, next) => {
         res.status(500).send('An error occurred while viewing card');
     }
 })
+
+//wojdowjdow
+router.get('/i', async (req, res, next) => {
+    const user_id = JSON.stringify(req.headers.user_id);
+
+    if (!user_id) {
+        return res.status(404).send('Specified user_id is missing');
+    }
+    
+    try {
+        const result = await cardsService.getAllUserCards(req);
+        if (result.length === 0) {
+            console.log("user search returned empty")
+            res.status(404).send('User with specified email is not found');
+        } else if (result) {
+            res.send(result);
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred while specified user');
+    }
+})
+
 module.exports = router;
