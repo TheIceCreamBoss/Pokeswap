@@ -81,7 +81,7 @@ router.delete('/', async (req, res, next) => {
    
     //Affected rows will determine if result is successful
     if (result.affectedRows > 0) {
-      res.send({ message: 'User deleted Successfully' });
+      res.send({ message: 'User deleted Successfully', success: true });
     } else {
       res.status(404).send('User not found');
     }

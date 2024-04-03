@@ -12,6 +12,8 @@
  * 
  */
 
+let global_id = null;
+
 // Fetches and Display Functions
 async function fetchAndDisplayUsers() {
     const tableElement = document.getElementById('userTable');
@@ -98,6 +100,27 @@ async function signup(event) {
     }
 }
 
+async function deleteUser(event) {
+    event.preventDefault();
+    const response = await fetch('/users', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            user_id: global_id,
+        })
+    });
+
+    const responseData = await response.json();
+    if (responseData.success) {
+        global_id = null;
+        location.reload();
+    } else {
+        alert("error!");
+    }
+}
+
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
 // Add or remove event listeners based on the desired functionalities.
@@ -107,6 +130,7 @@ window.onload = function() {
     fetchTableData();
     document.getElementById("userSignUp").addEventListener("submit", signup);
     document.getElementById("userLogin").addEventListener("submit", login);
+    document.getElementById("userDelete").addEventListener("submit", deleteUser);
 };
 
 // General function to refresh the displayed table data. 
@@ -128,6 +152,7 @@ function handleField(field, cell) {
 }
 
 async function showUserData(user_id) {
+    global_id = user_id;
     const bigDiv = document.getElementById('userData');
     bigDiv.style.visibility = "visible";
 
