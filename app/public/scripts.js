@@ -446,22 +446,7 @@ async function signup(event) {
 // shows all tables
 async function showTables(event) {
     event.preventDefault();
-
-    // const response = await fetch('/tables', {
-    //     method: 'GET',
-    // });
-
-    // const responseData = await response.json();
-    // const messageElement = document.getElementById('insertResultMsg');
-
-    // if (responseData.success) {
-    //     messageElement.textContent = "Data inserted successfully!";
-    //     fetchTableData();
-    // } else {
-    //     messageElement.textContent = "Error inserting data!";
-    // }
-
-    // Navigate to '/tables' and cause a page refresh
+    console.log('show tables')
     window.location.href = '/tables';
 }
 
@@ -518,10 +503,13 @@ async function showTables(event) {
 // Add or remove event listeners based on the desired functionalities.
 
 window.onload = function() {
+    console.log('window.onload has been called');
+    document.getElementById("showTables").addEventListener("click", showTables);
     checkDbConnection();
     fetchTableData();
     document.getElementById("userSignUp").addEventListener("submit", signup);
     document.getElementById("userLogin").addEventListener("submit", login);
+
     // document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     // document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     // document.getElementById("countDemotable").addEventListener("click", countDemotable);
