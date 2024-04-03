@@ -365,7 +365,7 @@ async function fetchAndDisplayTradeCards() {
 // Login to specified User
 async function login(event) {
     event.preventDefault();
-    const tableElement = document.getElementById('loginTable');
+    const tableElement = document.getElementById('userView');
     const tableBody = tableElement.querySelector('tbody');
     const emailValue = document.getElementById('loginEmail').value;
     const response = await fetch('/users/i', {
@@ -375,6 +375,7 @@ async function login(event) {
         }
     });
     const responseData = await response.json();
+    console.log(responseData);
     const user_id = responseData[0].user_id;
     if (tableBody) {
         tableBody.innerHTML = '';
@@ -386,7 +387,6 @@ async function login(event) {
             handleField(field, cell);
         });
     });
-
     showUserData(user_id);
 }
 
@@ -545,28 +545,28 @@ function handleField(field, cell) {
 }
 
 async function showUserData(user_id) {
-    const bigDiv = document.getElementById('userCards');
+    const bigDiv = document.getElementById('userData');
     bigDiv.style.visibility = "visible";
 
-    const tableElement = document.getElementById('userCards');
-    const tableBody = tableElement.querySelector('tbody');
+    const tableElement2 = document.getElementById('userCards');
+    const tableBody2 = tableElement2.querySelector('tbody');
 
-    const response = await fetch('/cards/i', {
+    const response2 = await fetch('/cards/i', {
         method: 'GET',
         headers: {
             user_id: user_id
         }
     });
 
-    const responseData = await response.json();
+    const responseData2 = await response2.json();
 
     // Always clear old, already fetched data before new fetching process.
-    if (tableBody) {
-        tableBody.innerHTML = '';
+    if (tableBody2) {
+        tableBody2.innerHTML = '';
     }
 
-    responseData.forEach(post => {
-        const row = tableBody.insertRow();
+    responseData2.forEach(post => {
+        const row = tableBody2.insertRow();
         Object.values(post).forEach((field, index) => {
             const cell = row.insertCell(index);
             handleField(field, cell);
