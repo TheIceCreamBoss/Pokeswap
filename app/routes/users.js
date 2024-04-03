@@ -23,9 +23,11 @@ router.get('/', async (req, res, next) => {
 // Create user
 router.post('/', async (req, res, next) => {
 //Check if required fields are present
-  if (!req.body.email || (req.body.profile_visibility === null)) {
+  if (!req.body.email || (req.body.profile_visibility == null)) {
     return res.status(400).send('Missing required user details');
   }
+  if (req.body.name == "") req.body.name = null;
+  if (req.body.phone_num == "") req.body.phone_num = null;
   try {
     const result = await userService.createUser(req.body);
 
