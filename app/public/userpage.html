@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">  
+    <title>User</title>
+</head>
+<body>
+    <h2>Users</h2>
+    <table id="userTable" border="1">
+        <thead>
+            <tr>
+                <th>user_id</th>
+                <th>email</th>
+                <th>name</th>
+                <th>phone_num</th>
+                <th>profile_visibility</th>
+            </tr>
+        </thead> 
+        <tbody>
+        </tbody>
+    </table>
+
+    <h2>Sign Up:</h2>
+    <form id="userSignUp">
+        Email: <input type="text" id="insertEmail" placeholder="Enter Email" maxlength="254"> <br>
+        Name: <input type="text" id="insertName" placeholder="Enter Name" maxlength="50"> <br>
+        Phone: <input type="text" id="insertPhone" placeholder="Enter Phone Number" maxlength="10"> <br>
+        Profile Visibility: <input type="checkbox" id="insertVisibility" name="vis"><br>
+        <button type="submit"> Sign Up </button>
+        <br><br>
+    </form>
+    <h2>OR</h2>
+    <h2>Login:</h2>
+    <form id="userLogin">
+        Email: <input type="text" id="loginEmail" placeholder="Enter Email" maxlength="254"> <br>
+        <button type="submit"> Login </button>
+        <br><br>
+    </form>
+    
+    <h2>Log</h2>
+    <table id="loginTable" border="1">
+        <thead>
+            <tr>
+                <th>user_id</th>
+                <th>email</th>
+                <th>name</th>
+                <th>phone_num</th>
+                <th>profile_visibility</th>
+            </tr>
+        </thead> 
+        <tbody>
+        </tbody>
+    </table>
+    <script src="scripts.js"></script>
+</body>
+</html>

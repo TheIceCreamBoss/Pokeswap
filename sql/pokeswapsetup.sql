@@ -364,6 +364,7 @@ INSERT INTO includedCards (trade_id, card_id) VALUES
 (3, 17),
 (3, 15),
 (4, 11),
+(4, 11),
 (5, 17);
 
 
