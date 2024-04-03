@@ -198,7 +198,7 @@ router.get('/getSuperUsers', async (req, res, next) => {
     //Check if results is empty
     if (result.length === 0) {
       console.log("no superusers exist for such set")
-      res.status(404).send('no superusers found');
+      res.send(result);
     } else if (result) {
       res.send(result);
     } else {
