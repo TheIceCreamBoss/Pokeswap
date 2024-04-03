@@ -168,4 +168,30 @@ router.get('/groupByPSAHaving/', async (req, res, next) => {
 })
 
 
+router.get('/getSuperUsers', async (req, res, next) => {
+  //Check if json is missing ID
+  // if (req.headers.collection) {
+  //   return res.status(404).send('Specified collection is missing');
+  // }
+
+  try {
+    console.log("attempting to find superusers (users who own all cards in a 'set')");
+    const result = await userService.getSuperUsers(req);
+    //Check if results is empty
+    if (result.length === 0) {
+      console.log("no superusers exist for such set")
+      res.status(404).send('no superusers found');
+    } else if (result) {
+      res.send(result);
+    } else {
+      res.status(404).send('User not found');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while specified user');
+  }
+})
+
+
+
 module.exports = router;
