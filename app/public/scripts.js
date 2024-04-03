@@ -401,22 +401,6 @@ async function fetchAndDisplayTradeCards() {
 // shows all tables
 async function showTables(event) {
     event.preventDefault();
-
-    // const response = await fetch('/tables', {
-    //     method: 'GET',
-    // });
-
-    // const responseData = await response.json();
-    // const messageElement = document.getElementById('insertResultMsg');
-
-    // if (responseData.success) {
-    //     messageElement.textContent = "Data inserted successfully!";
-    //     fetchTableData();
-    // } else {
-    //     messageElement.textContent = "Error inserting data!";
-    // }
-
-    // Navigate to '/tables' and cause a page refresh
     window.location.href = '/tables';
 }
 
