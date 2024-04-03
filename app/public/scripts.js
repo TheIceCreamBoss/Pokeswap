@@ -398,34 +398,27 @@ async function fetchAndDisplayTradeCards() {
 //     }
 // }
 
-// // Inserts new records into the demotable.
-// async function insertDemotable(event) {
-//     event.preventDefault();
+// shows all tables
+async function showTables(event) {
+    event.preventDefault();
 
-//     const idValue = document.getElementById('insertId').value;
-//     const nameValue = document.getElementById('insertName').value;
+    // const response = await fetch('/tables', {
+    //     method: 'GET',
+    // });
 
-//     const response = await fetch('/insert-demotable', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             id: idValue,
-//             name: nameValue
-//         })
-//     });
+    // const responseData = await response.json();
+    // const messageElement = document.getElementById('insertResultMsg');
 
-//     const responseData = await response.json();
-//     const messageElement = document.getElementById('insertResultMsg');
+    // if (responseData.success) {
+    //     messageElement.textContent = "Data inserted successfully!";
+    //     fetchTableData();
+    // } else {
+    //     messageElement.textContent = "Error inserting data!";
+    // }
 
-//     if (responseData.success) {
-//         messageElement.textContent = "Data inserted successfully!";
-//         fetchTableData();
-//     } else {
-//         messageElement.textContent = "Error inserting data!";
-//     }
-// }
+    // Navigate to '/tables' and cause a page refresh
+    window.location.href = '/tables';
+}
 
 // // Updates names in the demotable.
 // async function updateNameDemotable(event) {
@@ -483,7 +476,7 @@ window.onload = function() {
     checkDbConnection();
     fetchTableData();
     // document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
-    // document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
+    document.getElementById("showTables").addEventListener("click", showTables);
     // document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     // document.getElementById("countDemotable").addEventListener("click", countDemotable);
 };
