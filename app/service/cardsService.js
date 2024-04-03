@@ -24,6 +24,26 @@ async function getAllCards() {
     });
 }
 
+// View USER
+async function getAllUserCards(req) {
+    console.log('getAllUserCards'); 
+    return new Promise((resolve, reject) => {
+       
+        //obtain user_id from req body
+        const user_id = req.headers.user_id;
+        
+        connection.query('USE pokeswap');
+        connection.query('SELECT * FROM cardOwnsDescribedAs WHERE user_id = ?', user_id, function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                resolve(results);
+            }
+        });
+    });
+}
+
 //upload a card
 async function uploadCard(req) { 
     console.log('createUser'); 
@@ -204,6 +224,7 @@ async function deleteCard(req) {
 
 module.exports = {
    getAllCards,
+   getAllUserCards,
    uploadCard,
    updateCard,
    deleteCard,

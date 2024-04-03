@@ -42,7 +42,7 @@ async function createUser(req) {
         });
     });
 }
-2
+
 //UPDATE USER
 async function updateUser(req) {
     console.log('updateUser'); 

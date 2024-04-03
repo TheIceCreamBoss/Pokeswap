@@ -375,7 +375,7 @@ async function login(event) {
         }
     });
     const responseData = await response.json();
-
+    const user_id = responseData[0].user_id;
     if (tableBody) {
         tableBody.innerHTML = '';
     }
@@ -386,10 +386,8 @@ async function login(event) {
             handleField(field, cell);
         });
     });
-    console.log("lol");
-    const firstTable = document.getElementById("loginTable")[0];
-    console.log(firstTable);
-    showTables(firstTable);
+
+    showUserData(user_id);
 }
 
 //sign up
@@ -421,7 +419,6 @@ async function signup(event) {
         document.getElementById('insertName').value = "";
         document.getElementById('insertPhone').value = "";
         document.getElementById('insertVisibility').checked = false;
-
     } else {
         alert("error!");
     }
@@ -444,11 +441,11 @@ async function signup(event) {
 // }
 
 // shows all tables
-async function showTables(event) {
-    event.preventDefault();
-    console.log('show tables')
-    window.location.href = '/tables';
-}
+// async function showTables(event) {
+//     event.preventDefault();
+//     console.log('show tables')
+//     window.location.href = '/tables';
+// }
 
 // // Updates names in the demotable.
 // async function updateNameDemotable(event) {
@@ -504,9 +501,9 @@ async function showTables(event) {
 
 window.onload = function() {
     console.log('window.onload has been called');
-    document.getElementById("showTables").addEventListener("click", showTables);
     checkDbConnection();
     fetchTableData();
+    //document.getElementById("showTables").addEventListener("click", showTables);
     document.getElementById("userSignUp").addEventListener("submit", signup);
     document.getElementById("userLogin").addEventListener("submit", login);
 
@@ -547,7 +544,32 @@ function handleField(field, cell) {
     }
 }
 
-function showUserData(user_id) {
-    const bigDiv = document.getElementById('userData');
+async function showUserData(user_id) {
+    const bigDiv = document.getElementById('userCards');
     bigDiv.style.visibility = "visible";
+
+    const tableElement = document.getElementById('userCards');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/cards/i', {
+        method: 'GET',
+        headers: {
+            user_id: user_id
+        }
+    });
+
+    const responseData = await response.json();
+
+    // Always clear old, already fetched data before new fetching process.
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    responseData.forEach(post => {
+        const row = tableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            handleField(field, cell);
+        });
+    });
 }
