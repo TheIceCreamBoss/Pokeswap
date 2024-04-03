@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">  
+    <title>Tables</title>
+</head>
+<body>
+    <h1>Database Connection Status: 
+        <!-- An in-line placeholder to display connection status. -->
+        <span id="dbStatus"> </span>
+        <!-- A loading GIF, will be hided once get the status. -->
+        <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
+    </h1>
+
+    <br><hr><br>
+
+    <h2>Find Set Owner</h2>
+    <p>Enter an abbreviation of one of the TCG Sets. Example : XY.</p>
+    <form id="divide">
+        Set Name: <input type="text" id="setName" placeholder="Enter Set Name" required> <br><br>
+
+        <button type="submit"> Search </button> <br>
+    </form>
+    
+
+    <script src="scripts.js"></script>
+</body>
+</html>

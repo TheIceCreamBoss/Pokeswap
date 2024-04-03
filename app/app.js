@@ -62,6 +62,9 @@ app.get('/userpage/', function(req, res) {
   res.sendFile(path.join(__dirname + '/public/userpage.html'));
 });
 
+app.get('/division/', function(req, res) {
+  res.sendFile(path.join(__dirname + '/public/division.html'));
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
