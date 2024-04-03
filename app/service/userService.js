@@ -32,7 +32,7 @@ async function createUser(req) {
         //Sanitization, ? handles escaping of special characters
         const query = 'INSERT INTO user (email, name, phone_num, profile_visibility) VALUES (?, ?, ?, ?)';
         const values = [req.email, req.name, req.phone_num, req.profile_visibility];
-         connection.query(query, values, function (err, results) {
+        connection.query(query, values, function (err, results) {
             if (err) {
                 reject(err);
             } else {
@@ -42,7 +42,7 @@ async function createUser(req) {
         });
     });
 }
-
+2
 //UPDATE USER
 async function updateUser(req) {
     console.log('updateUser'); 

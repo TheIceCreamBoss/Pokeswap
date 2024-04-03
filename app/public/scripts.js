@@ -375,6 +375,7 @@ async function login(event) {
         }
     });
     const responseData = await response.json();
+
     if (tableBody) {
         tableBody.innerHTML = '';
     }
@@ -385,6 +386,10 @@ async function login(event) {
             handleField(field, cell);
         });
     });
+    console.log("lol");
+    const firstTable = document.getElementById("loginTable")[0];
+    console.log(firstTable);
+    showTables(firstTable);
 }
 
 //sign up
@@ -410,11 +415,16 @@ async function signup(event) {
         })
     });
     const responseData = await response.json();
-    fetchTableData();
-    document.getElementById('insertEmail').value = "";
-    document.getElementById('insertName').value = "";
-    document.getElementById('insertPhone').value = "";
-    document.getElementById('insertVisibility').checked = false;
+    if (responseData.success) {
+        fetchTableData();
+        document.getElementById('insertEmail').value = "";
+        document.getElementById('insertName').value = "";
+        document.getElementById('insertPhone').value = "";
+        document.getElementById('insertVisibility').checked = false;
+
+    } else {
+        alert("error!");
+    }
 }
 
 // // This function resets or initializes the demotable.
@@ -547,4 +557,9 @@ function handleField(field, cell) {
     } else {
         cell.textContent = field;
     }
+}
+
+function showUserData(user_id) {
+    const bigDiv = document.getElementById('userData');
+    bigDiv.style.visibility = "visible";
 }
