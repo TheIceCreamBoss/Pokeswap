@@ -54,7 +54,10 @@ async function login(event) {
             email: emailValue
         }
     });
-    const responseData = await response.json();
+    const responseData = await response.json()
+    .catch((error) => {
+        alert("Email not found.");
+    });
     console.log(responseData);
     global_id = responseData[0].user_id;
     global_phone = responseData[0].phone_num;
@@ -95,15 +98,17 @@ async function signup(event) {
             profile_visibility: boolVal
         })
     });
-    const responseData = await response.json();
+    const responseData = await response.json()
+    .catch((error) => {
+        alert("Error in Creating User.");
+    });
     if (responseData.success) {
+        alert("Successfully Created User.");
         fetchTableData();
         document.getElementById('insertEmail').value = "";
         document.getElementById('insertName').value = "";
         document.getElementById('insertPhone').value = "";
         document.getElementById('insertVisibility').checked = false;
-    } else {
-        alert("error!");
     }
 }
 
@@ -127,8 +132,12 @@ async function updateUser(event) {
             profile_visibility: boolVal
         })
     });
-    const responseData = await response.json();
+    const responseData = await response.json()
+    .catch((error) => {
+        alert("Error in Updating User.");
+    });
     if (responseData.success) {
+        alert("Successfully Updated User");
         fetchTableData();
         const tableElement = document.getElementById('userView');
         const tableBody = tableElement.querySelector('tbody');
@@ -140,7 +149,6 @@ async function updateUser(event) {
             }
         });
         const responseData = await response.json();
-        console.log(responseData);
         global_id = responseData[0].user_id;
         global_phone = responseData[0].phone_num;
         global_vis = responseData[0].profile_visibility.data[0] ? 1 : 0;
@@ -155,8 +163,6 @@ async function updateUser(event) {
                 handleField(field, cell);
             });
         });
-    } else {
-        alert("error!");
     }
 }
 
@@ -172,12 +178,17 @@ async function deleteUser(event) {
         })
     });
 
-    const responseData = await response.json();
+    const responseData = await response.json()
+    .catch((error) => {
+        alert("Error in Deleting User.");
+    });
     if (responseData.success) {
+        alert("Successfully Deleted User.");
         global_id = null;
+        global_phone = null;
+        global_name = null;
+        global_vis = 0;
         location.reload();
-    } else {
-        alert("error!");
     }
 }
 

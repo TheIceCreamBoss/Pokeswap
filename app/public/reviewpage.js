@@ -52,15 +52,17 @@ async function createReview(event) {
             rate_recipient_id: reciID
         })
     });
-    const responseData = await response.json();
+    const responseData = await response.json()
+    .catch((error) => {
+        alert("Duplicate Fields Detected.");
+    });
+    
     if (responseData.success) {
+        alert("Successfully Inserted Review.");
         fetchAndDisplayRates();
         getAvgs();
-    } else {
-        alert("error!");
     }
 }
-
 
 // nested aggre
 async function fetchAndDisplayAboveAverage(event) {
