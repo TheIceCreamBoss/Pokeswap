@@ -88,6 +88,56 @@ async function getPokemonCardsTypes() {
         });
     });
 }
+
+async function getPokemonCardsJoined(req) {
+    return new Promise((resolve, reject) => {
+        var sqlStatement = "SELECT ";
+
+        if (req.headers.info_id == 1) {
+            sqlStatement += "info_id, ";
+        }
+        if (req.headers.collection == 1) {
+            sqlStatement += "collection, ";
+        }
+        if (req.headers.pokemon == 1) {
+            sqlStatement += "pokemonCard.pokemon, ";
+        }
+        if (req.headers.card_description == 1) {
+            sqlStatement += "card_description, ";
+        }
+        if (req.headers.hp == 1) {
+            sqlStatement += "hp, ";
+        }
+        if (req.headers.gxcard == 1) {
+            sqlStatement += "gxcard, ";
+        }
+        if (req.headers.type == 1) {
+            sqlStatement += "type, ";
+        }
+
+        console.log(sqlStatement);
+
+        if (sqlStatement == "SELECT ") {
+            return;
+        }
+
+        // Remove the trailing comma and space
+        sqlStatement = sqlStatement.slice(0, -2);
+
+
+        connection.query('USE pokeswap');
+        connection.query(sqlStatement + ' FROM pokemonCard, pokemonTypes WHERE pokemonCard.pokemon = pokemonTypes.pokemon ORDER BY collection, length(info_id), info_id', function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                resolve(results);
+            }
+        });
+    });
+}
+
+
 async function getTrainerCards() {
     console.log('getTrainerCards'); 
     return new Promise((resolve, reject) => {
@@ -145,6 +195,7 @@ module.exports = {
     getEnergyCardDescriptions,
     getPokemonCards,
     getPokemonCardsTypes,
+    getPokemonCardsJoined,
     getTrainerCardDescriptions,
     getTrainerCards,
     getAllCollections

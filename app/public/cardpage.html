@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">  
+    <title>Pokemon Cards</title>
+</head>
+<body>
+    <div class="topnav">
+        <a href="/">Home</a>
+        <a href="/tables">Tables</a>
+        <a href="/userpage">Users</a>
+        <a class="active" href="/cardpage">Cards</a>
+        <a href="/reviewpage">Reviews</a>
+        <a href="/division">Find SuperOwner</a>
+    </div>
+    <br>
+    <br>
+    <h2>pokemonCards</h2>
+    <h3>Show Columns:</h3>
+    <form id="projections" style="display: flex; flex-direction: row; justify-content: space-between">
+        <label for="info_id">
+            <input type="checkbox" id="info_id" name="info_id" checked>
+            Info ID
+        </label><br>
+        <label for="collection">
+            <input type="checkbox" id="collection" name="collection" checked>
+            Collection
+        </label><br>
+        <label for="pokemon">
+            <input type="checkbox" id="pokemon" name="pokemon" checked>
+            Pokemon
+        </label><br>
+        <label for="card_description">
+            <input type="checkbox" id="card_description" name="card_description" checked>
+            Card Description
+        </label><br>
+        <label for="hp">
+            <input type="checkbox" id="hp" name="hp" checked>
+            HP
+        </label><br>
+        <label for="gxcard">
+            <input type="checkbox" id="gxcard" name="gxcard" checked>
+            GX Card
+        </label><br>
+        <label for="type">
+            <input type="checkbox" id="type" name="type" checked>
+            Type
+        </label><br>
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+    <table id="pokemonCards" border="1">
+        <thead>
+            <tr>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script src="cardpage.js"></script>
+</body>
+</html>
