@@ -22,7 +22,7 @@
     <table id="userTable" border="1">
         <thead>
             <tr>
-                <th>user_id</th>
+                <th class="primaryKey">user_id</th>
                 <th>email</th>
                 <th>name</th>
                 <th>phone_num</th>
@@ -33,11 +33,11 @@
         </tbody>
     </table>
     
-    <h2>psa_ratings</h2>
+    <h2>verifiedRatings</h2>
     <table id="verifiedRatingTable" border="1">
         <thead>
             <tr>
-                <th>psa_rating</th>
+                <th class="primaryKey">psa_rating</th>
                 <th>verified</th>
             </tr>
         </thead>
@@ -49,13 +49,13 @@
     <table id="cardsTable" border="1">
         <thead>
             <tr>
-                <th>card_id</th>
-                <th>psa_rating</th>
+                <th class="primaryKey">card_id</th>
+                <th class="foreignKey">psa_rating</th>
                 <th>date_uploaded</th>
-                <th>user_id</th>
+                <th class="foreignKey">user_id</th>
                 <th>date_aquired</th>
-                <th>info_id</th>
-                <th>collection</th>
+                <th class="foreignKey">info_id</th>
+                <th class="foreignKey">collection</th>
             </tr>
         </thead>
         <tbody>
@@ -66,8 +66,8 @@
     <table id="cardTypeTable" border="1">
         <thead>
             <tr>
-                <th>info_id</th>
-                <th>collection</th>
+                <th class="primaryKey">info_id</th>
+                <th class="primaryKey">collection</th>
             </tr>
         </thead>
         <tbody>
@@ -78,9 +78,9 @@
     <table id="table_po" border="1">
         <thead>
             <tr>
-                <th>info_id</th>
-                <th>collection</th>
-                <th>pokemon</th>
+                <th class="primaryKey foreignKey">info_id</th>
+                <th class="primaryKey foreignKey">collection</th>
+                <th class="foreignKey">pokemon</th>
                 <th>card_description</th>
                 <th>hp</th>
                 <th>gxcard</th>
@@ -93,7 +93,7 @@
     <h2>pokemonTypes</h2>
     <table id="table_po2" border="1">
         <thead>
-                <th>pokemon</th>
+                <th class="primaryKey">pokemon</th>
                 <th>type</th>
             </tr>
         </thead>
@@ -105,9 +105,9 @@
     <table id="table_tr" border="1">
         <thead>
             <tr>
-                <th>info_id</th>
-                <th>collection</th>
-                <th>trainer</th>
+                <th class="primaryKey foreignKey">info_id</th>
+                <th class="primaryKey foreignKey">collection</th>
+                <th class="foreignKey">trainer</th>
             </tr>
         </thead>
         <tbody>
@@ -118,7 +118,7 @@
     <table id="table_tr2" border="1">
         <thead>
             <tr>
-                <th>trainer</th>
+                <th class="primaryKey">trainer</th>
                 <th>card_description</th>
             </tr>
         </thead>
@@ -130,9 +130,9 @@
     <table id="table_en" border="1">
         <thead>
             <tr>
-                <th>info_id</th>
-                <th>collection</th>
-                <th>type</th>
+                <th class="primaryKey foreignKey">info_id</th>
+                <th class="primaryKey foreignKey">collection</th>
+                <th class="foreignKey">type</th>
             </tr>
         </thead>
         <tbody>
@@ -143,7 +143,7 @@
     <table id="table_en2" border="1">
         <thead>
             <tr>
-                <th>type</th>
+                <th class="primaryKey">type</th>
                 <th>card_description</th>
             </tr>
         </thead>
@@ -155,9 +155,9 @@
     <table id="commentTable" border="1">
         <thead>
             <tr>
-                <th>comment_id</th>
-                <th>post_id</th>
-                <th>user_id</th>
+                <th class="primaryKey">comment_id</th>
+                <th class="foreignKey">post_id</th>
+                <th class="foreignKey">user_id</th>
                 <th>content</th>
                 <th>comment_date</th>
             </tr>
@@ -170,11 +170,11 @@
     <table id="postTable" border="1">
         <thead>
             <tr>
-                <th>post_id</th>
+                <th class="primaryKey">post_id</th>
                 <th>image_link</th>
                 <th>content</th>
                 <th>post_date</th>
-                <th>user_id</th>
+                <th class="foreignKey">user_id</th>
             </tr>
         </thead>
         <tbody>
@@ -185,11 +185,11 @@
     <table id="rateTable" border="1">
         <thead>
             <tr>
-                <th>rate_id</th>
+                <th class="primaryKey">rate_id</th>
                 <th>star_count</th>
                 <th>description</th>
-                <th>rate_author_id</th>
-                <th>rate_recipient_id</th>
+                <th class="foreignKey">rate_author_id</th>
+                <th class="foreignKey">rate_recipient_id</th>
                 <th>rate_date</th>
             </tr>
         </thead>
@@ -201,10 +201,10 @@
     <table id="tradeTable" border="1">
         <thead>
             <tr>
-                <th>trade_id</th>
+                <th class="primaryKey">trade_id</th>
                 <th>trade_date</th>
-                <th>trade_author_id</th>
-                <th>trade_recipient_id</th>
+                <th class="foreignKey">trade_author_id</th>
+                <th class="foreignKey">trade_recipient_id</th>
             </tr>
         </thead>
         <tbody>
@@ -215,8 +215,8 @@
     <table id="tradeCardTable" border="1">
         <thead>
             <tr>
-                <th>trade_id</th>
-                <th>card_id</th>
+                <th class="primaryKey foreignKey">trade_id</th>
+                <th class="primaryKey foreignKey">card_id</th>
             </tr>
         </thead>
         <tbody>

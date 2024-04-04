@@ -30,7 +30,7 @@ th, td {
 
 th {
   background-color: #f2f2f2;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 tr:last-child td {
@@ -119,4 +119,12 @@ input::placeholder, textarea::placeholder {
 
 .dropDown {
   display : flex;
+}
+
+.primaryKey {
+  text-decoration: underline;
+}
+
+.foreignKey {
+  font-weight: 1000;
 }
