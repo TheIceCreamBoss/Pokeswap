@@ -16,33 +16,26 @@
 
 
 // nested aggre
-async function fetchAndDisplaySuperUsers(event) {
+async function getTradeAuthorInfo(event) {
     event.preventDefault();
-    var coll = document.getElementById('collections').value;
+    var coll = document.getElementById('tradeIDs').value;
     console.log(coll);
 
-
-    // if (inq == "geq") {
-    //     inq = ">=";
-    // } else if (inq == "eq") {
-    //     inq = "=";
-    // } else {
-    //     inq = "<=";
-    // }
-
-    const tableElement = document.getElementById('userView');
+    const tableElement = document.getElementById('tradeAuthor');
     const tableBody = tableElement.querySelector('tbody');
 
-    /*
-    const response = await fetch('/users/getSuperUsers', {
+    
+    const response = await fetch('/trade/includedCardsA', {
         method: 'GET',
         headers: {
-            collection: coll
+            trade_id: coll
         }
     });
-*/
-    const responseData = await response.json();
 
+    const responseData = await response.json()
+    .catch((error) => {});
+    
+    console.log(responseData);
     if (tableBody) {
         tableBody.innerHTML = '';
     }
@@ -53,7 +46,42 @@ async function fetchAndDisplaySuperUsers(event) {
             handleField(field, cell);
         });
     });
+    
+
+
+
+    event.preventDefault();
+    var coll = document.getElementById('tradeIDs').value;
+    console.log(coll);
+
+     const recElement = document.getElementById('tradeRecipient');
+     const recTableBody = recElement.querySelector('tbody');
+
+    
+     responseR = await fetch('/trade/includedCardsR', {
+        method: 'GET',
+        headers: {
+            trade_id: coll
+        }
+    });
+
+    responseRData = await responseR.json().catch((error) => {});
+    
+    console.log("R" + responseData);
+
+    if (recTableBody) {
+        recTableBody.innerHTML = '';
+    }
+    responseRData.forEach(post => {
+        const row = recTableBody.insertRow();
+        Object.values(post).forEach((field, index) => {
+            const cell = row.insertCell(index);
+            handleField(field, cell);
+        });
+    });
+
 }
+
 
 async function getTradeIDs() {
     const response = await fetch('/trade/getAllTradeID', {
@@ -66,36 +94,12 @@ async function getTradeIDs() {
         const option = document.createElement('option');
         //give options an "options" class
         option.className = "dropdown-content";
-        option.value = post.collection;
-        option.text = post.collection;
+        option.value = post.trade_id;
+        option.text = post.trade_id;
         coll.appendChild(option);
     });
 }
 
-// Fetches and Display Functions
-async function fetchAndDisplayUsers() {
-    const tableElement = document.getElementById('userView');
-    const tableBody = tableElement.querySelector('tbody');
-
-    const response = await fetch('/users', {
-        method: 'GET'
-    });
-
-    const responseData = await response.json();
-
-    // Always clear old, already fetched data before new fetching process.
-    if (tableBody) {
-        tableBody.innerHTML = '';
-    }
-
-    responseData.forEach(post => {
-        const row = tableBody.insertRow();
-        Object.values(post).forEach((field, index) => {
-            const cell = row.insertCell(index);
-            handleField(field, cell);
-        });
-    });
-}
 
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
@@ -103,9 +107,10 @@ async function fetchAndDisplayUsers() {
 
 window.onload = function() {
     console.log('window.onload has been called');
-    //fetchAndDisplayUsers();
+    //getTradeAuthorInfo();
+    //getTradeRecipientInfo();
     getTradeIDs();
-    document.getElementById("selectTradeID").addEventListener("submit", fetchAndDisplaySuperUsers);
+    document.getElementById("selectTradeID").addEventListener("submit", getTradeAuthorInfo);
 };
 
 

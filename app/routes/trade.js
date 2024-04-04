@@ -108,12 +108,32 @@ router.get('/c', async (req, res, next) => {
 })
 
 //Returns cards IDs included in trades based on trade ID, this is paired with who OWNS the card to find out which side of the trade the card belongs to
-router.get('/includedCards', async (req, res, next) => {
+router.get('/includedCardsA', async (req, res, next) => {
   try {
-    const results = await tradeService.viewIncludedCards(req);
+    const results = await tradeService.viewIncludedCardsA(req);
 
     if (results.length === 0) {
-      console.log("trade search returned empty")
+      console.log("trade search returned empty for author")
+      res.status(404).send('Cards included with specified trade ID not found');
+    } else if (results) {
+      res.send(results);
+    } else {
+      res.status(404).send('Specified trade not found');
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while fetching trade and related cards');
+  }
+})
+
+//Returns cards IDs included in trades based on trade ID, this is paired with who OWNS the card to find out which side of the trade the card belongs to
+router.get('/includedCardsR', async (req, res, next) => {
+  try {
+    const results = await tradeService.viewIncludedCardsR(req);
+
+    if (results.length === 0) {
+      console.log("trade search returned empty for recipient")
       res.status(404).send('Cards included with specified trade ID not found');
     } else if (results) {
       res.send(results);

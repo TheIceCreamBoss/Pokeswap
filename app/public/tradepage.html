@@ -20,7 +20,7 @@
     <br><br>
 
     <h2>Find trade info</h2>
-    <p>Enter an abbreviation of one of the TCG Sets..</p>
+    <p>Select a valid Trade ID to view</p>
 
     <form id="selectTradeID">
         <!-- Set Name: <input type="text" id="coll" placeholder="Enter Set Name" required> <br><br> -->
@@ -33,17 +33,16 @@
         <button type="submit"> Search </button> <br>
     </form>
 
-    <div id="userData" style="visibility: visible">
-        <h2>User Data:</h2>
-            <h3>User:</h3>
-            <table id="userView" border="1">
+    <div id="tradeAuthor" style="visibility: visible">
+        <h2>Within this trade:</h2>
+        <h3>Trade Author's cards: </h3>
+            <table id="authView" border="1">
                 <thead>
                     <tr>
+                        <th>trade_id</th>
                         <th>user_id</th>
-                        <th>email</th>
-                        <th>name</th>
-                        <th>phone_num</th>
-                        <th>profile_visibility</th>
+                        <th>info_id</th>
+                        <th>collection</th>
                     </tr>
                 </thead> 
                 <tbody>
@@ -68,7 +67,40 @@
             <br><br>
         </div>
     
+        <h3>Trade Recipient's cards: </h3>
+        <div id="tradeRecipient" style="visibility: visible">
 
-    <script src="division.js"></script>
+                <table id="recView" border="1">
+                    <thead>
+                        <tr>
+                            <th>trade_id</th>
+                            <th>user_id</th>
+                            <th>info_id</th>
+                            <th>collection</th>
+                        </tr>
+                    </thead> 
+                    <tbody>
+                    </tbody>
+                </table>
+                <!-- <h3>My Cards:</h3>
+                <table id="userCards" border="1">
+                    <thead>
+                        <tr>
+                            <th>card_id</th>
+                            <th>psa_rating</th>
+                            <th>date_uploaded</th>
+                            <th>user_id</th>
+                            <th>date_aquired</th>
+                            <th>info_id</th>
+                            <th>collection</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table> -->
+                <br><br>
+            </div>
+
+    <script src="tradepage.js"></script>
 </body>
 </html>
