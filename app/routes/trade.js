@@ -127,4 +127,24 @@ router.get('/includedCards', async (req, res, next) => {
   }
 })
 
+//returns all trade ids
+router.get('/getAllTradeID', async (req, res, next) => {
+  try {
+    const results = await tradeService.getAllTradeID();
+
+    if (results.length === 0) {
+      console.log("trade search returned empty")
+      res.status(404).send('trade IDs not found');
+    } else if (results) {
+      res.send(results);
+    } else {
+      res.status(404).send('Specified trade not found');
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while fetching trade and related cards');
+  }
+})
+
 module.exports = router;

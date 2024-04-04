@@ -158,6 +158,24 @@ async function getIncludedCards() {
     });
 }
 
+async function getAllTradeID() {
+    console.log('getAllTradeID'); 
+    return new Promise((resolve, reject) => {
+
+        connection.query('USE pokeswap');
+
+        connection.query('SELECT trade_id FROM tradeOfferTradesWith', function (err, results) {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(results);
+                resolve(results);
+            }
+        });
+    });
+}
+
+
 
 
 //Returns cards IDs included in trades based on trade ID, this needs to be paired with who OWNS the card to find out which side of the trade the card belongs to
@@ -166,7 +184,7 @@ async function viewIncludedCards(req) {
     return new Promise((resolve, reject) => {
         connection.query('USE pokeswap');
 
-        connection.query(' SELECT iC.trade_id, cODA.user_id, info_id, collection FROM includedCards iC, tradeOfferTradesWith tOTW, cardOwnsDescribedAs cODA WHERE iC.trade_id = ? AND iC.trade_id = tOTW.trade_id AND iC.card_id = cODA.card_id AND (cODA.user_ID = tOTW.trade_author_id OR cODA.user_ID = tOTW.trade_recipient_id) AND iC.card_id IN (SELECT card_id FROM includedCards WHERE trade_id = iC.trade_id)', req.body.trade_id, async function (err,results) {
+        connection.query(' SELECT iC.trade_id, cODA.user_id, info_id, collection FROM includedCards iC, tradeOfferTradesWith tOTW, cardOwnsDescribedAs cODA WHERE iC.trade_id = ? AND iC.trade_id = tOTW.trade_id AND iC.card_id = cODA.card_id AND (cODA.user_ID = tOTW.trade_author_id OR cODA.user_ID = tOTW.trade_recipient_id) AND iC.card_id IN (SELECT card_id FROM includedCards WHERE trade_id = iC.trade_id)', req.headers.trade_id, async function (err,results) {
 
             
             if (err) {
@@ -192,4 +210,5 @@ module.exports = {
     viewTrade,
     getIncludedCards,
     viewIncludedCards,
+    getAllTradeID
 }
