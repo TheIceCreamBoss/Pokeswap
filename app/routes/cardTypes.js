@@ -125,6 +125,7 @@ router.get('/c', async (req, res, next) => {
         } else {
         res.status(404).send('No collections found');
         }
+
     } catch (error) {
         console.error(error);
         res.status(500).send('An error occurred while fetching collections');
@@ -134,7 +135,6 @@ router.get('/c', async (req, res, next) => {
 // get all pokemon cards joined
 router.get('/pokemon', async (req, res, next) => {
     try {
-        console.log("lol");
         const results = await cardTypesService.getPokemonCardsJoined(req);
         if (results) {
         res.send(results);

@@ -25,6 +25,13 @@ async function fetchAndDisplayPokemonCards(event) {
     var hp = document.getElementById("hp").checked ? 1 : 0;
     var gxcard = document.getElementById("gxcard").checked ? 1 : 0;
     var type = document.getElementById("type").checked ? 1 : 0;
+    var operator = document.getElementById('operator').value ? document.getElementById('operator').value : null;
+
+    var collectionId = document.getElementById('collectionSearch').value ? document.getElementById('collectionSearch').value : null;
+    var pokemonName = document.getElementById('pokemonSearch').value ? document.getElementById('pokemonSearch').value : null;
+
+    console.log(collectionId);
+    console.log(pokemonName);
 
 
 
@@ -46,7 +53,10 @@ async function fetchAndDisplayPokemonCards(event) {
             card_description: card_description,
             hp: hp,
             gxcard: gxcard,
-            type: type
+            type: type,
+            collectionId : collectionId,
+            pokemonName : pokemonName,
+            operator: operator
         }
     });
 
@@ -105,6 +115,9 @@ async function fetchAndDisplayPokemonCards(event) {
         });
     });
 }
+
+
+
 
 
 window.onload = function() {

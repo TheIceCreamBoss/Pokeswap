@@ -92,6 +92,8 @@ async function getPokemonCardsTypes() {
 async function getPokemonCardsJoined(req) {
     return new Promise((resolve, reject) => {
         var sqlStatement = "SELECT ";
+        var sqlStatementEnd = "WHERE pokemonCard.pokemon = pokemonTypes.pokemon  "
+
 
         if (req.headers.info_id == 1) {
             sqlStatement += "info_id, ";
@@ -115,10 +117,32 @@ async function getPokemonCardsJoined(req) {
             sqlStatement += "type, ";
         }
 
+
+
+        if(req.headers.collectionid &&  req.headers.collectionid != 'null' && req.headers.pokemonname && req.headers.pokemonname != 'null') {
+            sqlStatementEnd += "AND (pokemonCard.collection = '" + req.headers.collectionid + "' ";
+            sqlStatementEnd += req.headers.operator + " ";
+            sqlStatementEnd += "pokemonCard.pokemon = '" + req.headers.pokemonname + "' )";
+            
+        } else {
+            if (req.headers.collectionid &&  req.headers.collectionid != 'null') {
+                sqlStatementEnd += "AND pokemonCard.collection = '" + req.headers.collectionid + "' ";
+            }
+    
+            if(req.headers.pokemonname && req.headers.pokemonname != 'null') {
+                sqlStatementEnd += "AND pokemonCard.pokemon = '" + req.headers.pokemonname + "' ";
+            }
+        }
+        
+        
+
+        console.log(sqlStatementEnd);
+
+
         console.log(sqlStatement);
 
         if (sqlStatement == "SELECT ") {
-            return;
+            return null;
         }
 
         // Remove the trailing comma and space
@@ -126,11 +150,11 @@ async function getPokemonCardsJoined(req) {
 
 
         connection.query('USE pokeswap');
-        connection.query(sqlStatement + ' FROM pokemonCard, pokemonTypes WHERE pokemonCard.pokemon = pokemonTypes.pokemon ORDER BY collection, length(info_id), info_id', function (err, results) {
+        connection.query(sqlStatement + ' FROM pokemonCard, pokemonTypes ' + sqlStatementEnd + 'ORDER BY collection, length(info_id), info_id', function (err, results) {
             if (err) {
                 reject(err);
             } else {
-                console.log(results);
+                
                 resolve(results);
             }
         });

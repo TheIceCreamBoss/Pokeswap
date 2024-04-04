@@ -50,6 +50,25 @@
         </label><br>
         <button type="submit">Submit</button>
     </form>
+
+    <form id="search" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center">
+        <label for="collection">
+            Collection: <input type="text" id="collectionSearch" name="collection">
+        </label><br>
+
+        <label for="operator">
+            Operator:
+            <select id="operator" name="operator">
+                <option value="AND" selected>AND</option>
+                <option value="OR">OR</option>
+            </select>
+        </label><br>
+
+        <label for="pokemon">
+            Pokemon: <input type="text" id="pokemonSearch" name="pokemon">
+        </label><br>
+    </form>
+
     <br>
     <table id="pokemonCards" border="1">
         <thead>
