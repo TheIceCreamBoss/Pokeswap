@@ -11,6 +11,14 @@
  *   HTML structure.
  * 
  */
+window.onload = function() {
+    console.log('window.onload has been called');
+    getIDs();
+    getAvgs();
+    fetchAndDisplayRates();
+    document.getElementById("filter").addEventListener("submit", fetchAndDisplayAboveAverage);
+    document.getElementById("addReview").addEventListener("submit", createReview);
+};
 
 async function fetchAndDisplayRates() {
     const tableElement = document.getElementById('rateTable');
@@ -99,20 +107,6 @@ async function fetchAndDisplayAboveAverage(event) {
         });
     });
 }
-
-// ---------------------------------------------------------------
-// Initializes the webpage functionalities.
-// Add or remove event listeners based on the desired functionalities.
-
-window.onload = function() {
-    console.log('window.onload has been called');
-    getIDs();
-    getAvgs();
-    fetchAndDisplayRates();
-    document.getElementById("filter").addEventListener("submit", fetchAndDisplayAboveAverage);
-    document.getElementById("addReview").addEventListener("submit", createReview);
-};
-
 
 function handleField(field, cell) {
     if (typeof field === 'object') {
