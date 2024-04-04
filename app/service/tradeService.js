@@ -164,7 +164,7 @@ async function getAllTradeID() {
 
         connection.query('USE pokeswap');
 
-        connection.query('SELECT trade_id FROM tradeOfferTradesWith', function (err, results) {
+        connection.query('SELECT trade_id FROM tradeOfferTradesWith ORDER BY trade_id', function (err, results) {
             if (err) {
                 reject(err);
             } else {

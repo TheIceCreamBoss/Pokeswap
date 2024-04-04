@@ -114,7 +114,7 @@ router.get('/includedCardsA', async (req, res, next) => {
 
     if (results.length === 0) {
       console.log("trade search returned empty for author")
-      res.status(404).send('Cards included with specified trade ID not found');
+      res.send(results);
     } else if (results) {
       res.send(results);
     } else {
@@ -133,8 +133,8 @@ router.get('/includedCardsR', async (req, res, next) => {
     const results = await tradeService.viewIncludedCardsR(req);
 
     if (results.length === 0) {
+      res.send(results);
       console.log("trade search returned empty for recipient")
-      res.status(404).send('Cards included with specified trade ID not found');
     } else if (results) {
       res.send(results);
     } else {
