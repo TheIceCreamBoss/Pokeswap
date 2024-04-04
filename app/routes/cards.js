@@ -122,7 +122,7 @@ router.get('/i', async (req, res, next) => {
         const result = await cardsService.getAllUserCards(req);
         if (result.length === 0) {
             console.log("user search returned empty")
-            res.status(404).send('User with specified email is not found');
+            res.send(result);
         } else if (result) {
             res.send(result);
         } else {
