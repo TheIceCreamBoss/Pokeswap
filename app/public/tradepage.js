@@ -32,10 +32,12 @@ async function getTradeAuthorInfo(event) {
         }
     });
 
-    const responseData = await response.json()
-    .catch((error) => {});
+
+
+    const responseData = await response.json().catch((error) => {});
+
     
-    console.log(responseData);
+    console.log("aaa" + responseData);
     if (tableBody) {
         tableBody.innerHTML = '';
     }
