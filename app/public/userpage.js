@@ -12,7 +12,10 @@
  * 
  */
 
-let global_id = null;
+var global_id = null;
+var global_name = null;
+var global_phone = null;
+var global_vis = 0;
 
 // Fetches and Display Functions
 async function fetchAndDisplayUsers() {
@@ -53,7 +56,11 @@ async function login(event) {
     });
     const responseData = await response.json();
     console.log(responseData);
-    const user_id = responseData[0].user_id;
+    global_id = responseData[0].user_id;
+    global_phone = responseData[0].phone_num;
+    global_vis = responseData[0].profile_visibility.data[0] ? 1 : 0;
+    console.log(global_vis);
+    global_name = responseData[0].name;
     if (tableBody) {
         tableBody.innerHTML = '';
     }
@@ -64,7 +71,7 @@ async function login(event) {
             handleField(field, cell);
         });
     });
-    showUserData(user_id);
+    showUserData();
 }
 
 //sign up
@@ -95,6 +102,59 @@ async function signup(event) {
         document.getElementById('insertName').value = "";
         document.getElementById('insertPhone').value = "";
         document.getElementById('insertVisibility').checked = false;
+    } else {
+        alert("error!");
+    }
+}
+
+//update user
+async function updateUser(event) {
+    event.preventDefault();
+    const nameValue = document.getElementById('newName').value;
+    const phoneValue = document.getElementById('newPhone').value;
+    const visValue = document.getElementById('newVis').checked;
+    const boolVal = visValue ? 1 : 0;
+
+    const response = await fetch('/users', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            user_id: global_id,
+            name: nameValue,
+            phone_num: phoneValue,
+            profile_visibility: boolVal
+        })
+    });
+    const responseData = await response.json();
+    if (responseData.success) {
+        fetchTableData();
+        const tableElement = document.getElementById('userView');
+        const tableBody = tableElement.querySelector('tbody');
+        const emailValue = document.getElementById('loginEmail').value;
+        const response = await fetch('/users/i', {
+            method: 'GET',
+            headers: {
+                email: emailValue
+            }
+        });
+        const responseData = await response.json();
+        console.log(responseData);
+        global_id = responseData[0].user_id;
+        global_phone = responseData[0].phone_num;
+        global_vis = responseData[0].profile_visibility.data[0] ? 1 : 0;
+        global_name = responseData[0].name;
+        if (tableBody) {
+            tableBody.innerHTML = '';
+        }
+        responseData.forEach(post => {
+            const row = tableBody.insertRow();
+            Object.values(post).forEach((field, index) => {
+                const cell = row.insertCell(index);
+                handleField(field, cell);
+            });
+        });
     } else {
         alert("error!");
     }
@@ -185,6 +245,7 @@ window.onload = function() {
     fetchTableData();
     document.getElementById("userSignUp").addEventListener("submit", signup);
     document.getElementById("userLogin").addEventListener("submit", login);
+    document.getElementById("userUpdate").addEventListener("submit", updateUser);
     document.getElementById("userDelete").addEventListener("submit", deleteUser);
     document.getElementById("havingSelection").addEventListener("submit", havingQuery);
 };
@@ -207,8 +268,7 @@ function handleField(field, cell) {
     }
 }
 
-async function showUserData(user_id) {
-    global_id = user_id;
+async function showUserData() {
     const bigDiv = document.getElementById('userData');
     bigDiv.style.visibility = "visible";
 
@@ -218,7 +278,7 @@ async function showUserData(user_id) {
     const response2 = await fetch('/cards/i', {
         method: 'GET',
         headers: {
-            user_id: user_id
+            user_id: global_id
         }
     });
 
@@ -261,4 +321,12 @@ async function showUserData(user_id) {
             handleField(field, cell);
         });
     });
+
+    document.getElementById('newName').value = global_name;
+    document.getElementById('newPhone').value = global_phone;
+    if (global_vis == 1) {
+        document.getElementById('newVis').checked = true;
+    } else {
+        document.getElementById('newVis').checked = false;
+    }
 }

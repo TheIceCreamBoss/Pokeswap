@@ -134,7 +134,6 @@ router.get('/c', async (req, res, next) => {
 // get all pokemon cards joined
 router.get('/pokemon', async (req, res, next) => {
     try {
-        console.log("lol");
         const results = await cardTypesService.getPokemonCardsJoined(req);
         if (results) {
         res.send(results);

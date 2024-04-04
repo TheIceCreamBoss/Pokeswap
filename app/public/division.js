@@ -21,15 +21,6 @@ async function fetchAndDisplaySuperUsers(event) {
     var coll = document.getElementById('collections').value;
     console.log(coll);
 
-
-    // if (inq == "geq") {
-    //     inq = ">=";
-    // } else if (inq == "eq") {
-    //     inq = "=";
-    // } else {
-    //     inq = "<=";
-    // }
-
     const tableElement = document.getElementById('userView');
     const tableBody = tableElement.querySelector('tbody');
 
