@@ -158,27 +158,24 @@ async function getIncludedCards() {
     });
 }
 
+
+
 //Returns cards IDs included in trades based on trade ID, this needs to be paired with who OWNS the card to find out which side of the trade the card belongs to
 async function viewIncludedCards(req) {
     console.log('viewIncludedCards');
     return new Promise((resolve, reject) => {
         connection.query('USE pokeswap');
 
-        connection.query('SELECT * FROM includedCards WHERE trade_id = ?', req.body.trade_id, async function (err,results) {
+        connection.query(' SELECT iC.trade_id, cODA.user_id, info_id, collection FROM includedCards iC, tradeOfferTradesWith tOTW, cardOwnsDescribedAs cODA WHERE iC.trade_id = ? AND iC.trade_id = tOTW.trade_id AND iC.card_id = cODA.card_id AND (cODA.user_ID = tOTW.trade_author_id OR cODA.user_ID = tOTW.trade_recipient_id) AND iC.card_id IN (SELECT card_id FROM includedCards WHERE trade_id = iC.trade_id)', req.body.trade_id, async function (err,results) {
+
+            
             if (err) {
                 reject(err);
             } else {
                 console.log(results);
                 try {
-                    const cardOwnersPromises = results.map(result =>
-                        findCardOwner({ card_id: result.card_id}));
-
-                        const cardOwners = await Promise.all(cardOwnersPromises);
-                        const cardsWithOwners = results.map((result, i) => ({
-                            ...result, cardOwner: cardOwners[i]
-                        }));
-                        console.log(cardsWithOwners);
-                        resolve(cardsWithOwners);
+                    
+                        resolve(results);
                 } catch (error) {
                     reject(error);
                 }
@@ -186,23 +183,6 @@ async function viewIncludedCards(req) {
             }
         });
     })
-}
-
-
-//helper to find card owners within a trade
-function findCardOwner(req) {
-    return new Promise((resolve, reject) => {
- 
-        connection.query('SELECT user_id FROM cardOwnsDescribedAs WHERE card_id = ?', req.card_id, function (err, results) {
-            if (err) {
-                reject(err);
-            } else {
-                //Below prints out each user_id found
-                //console.log(results);
-                resolve(results.length > 0 ? results[0].user_id : null);
-            }
-        });
-    });
 }
 
 module.exports = {
