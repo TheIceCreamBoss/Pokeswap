@@ -13,6 +13,7 @@
  */
 
 var global_id = null;
+var global_email = null;
 var global_name = null;
 var global_phone = null;
 var global_vis = 0;
@@ -60,6 +61,7 @@ async function login(event) {
     });
     console.log(responseData);
     global_id = responseData[0].user_id;
+    global_email = emailValue;
     global_phone = responseData[0].phone_num;
     global_vis = responseData[0].profile_visibility.data[0] ? 1 : 0;
     console.log(global_vis);
@@ -116,6 +118,7 @@ async function signup(event) {
 async function updateUser(event) {
     event.preventDefault();
     const nameValue = document.getElementById('newName').value;
+    const emailValue = document.getElementById('newEmail').value;
     const phoneValue = document.getElementById('newPhone').value;
     const visValue = document.getElementById('newVis').checked;
     const boolVal = visValue ? 1 : 0;
@@ -127,6 +130,7 @@ async function updateUser(event) {
         },
         body: JSON.stringify({
             user_id: global_id,
+            email: emailValue,
             name: nameValue,
             phone_num: phoneValue,
             profile_visibility: boolVal
@@ -134,14 +138,15 @@ async function updateUser(event) {
     });
     const responseData = await response.json()
     .catch((error) => {
-        alert("Error in Updating User.");
+        alert("Duplicate Email Detected.");
+        document.getElementById('newEmail').value = global_email;
     });
     if (responseData.success) {
         alert("Successfully Updated User");
         fetchTableData();
+        document.getElementById('loginEmail').value = emailValue;
         const tableElement = document.getElementById('userView');
         const tableBody = tableElement.querySelector('tbody');
-        const emailValue = document.getElementById('loginEmail').value;
         const response = await fetch('/users/i', {
             method: 'GET',
             headers: {
@@ -150,6 +155,7 @@ async function updateUser(event) {
         });
         const responseData = await response.json();
         global_id = responseData[0].user_id;
+        global_email = emailValue;
         global_phone = responseData[0].phone_num;
         global_vis = responseData[0].profile_visibility.data[0] ? 1 : 0;
         global_name = responseData[0].name;
@@ -335,6 +341,7 @@ async function showUserData() {
 
     document.getElementById('newName').value = global_name;
     document.getElementById('newPhone').value = global_phone;
+    document.getElementById('newEmail').value = global_email;
     if (global_vis == 1) {
         document.getElementById('newVis').checked = true;
     } else {
