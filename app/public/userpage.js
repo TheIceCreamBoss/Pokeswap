@@ -138,7 +138,7 @@ async function updateUser(event) {
     });
     const responseData = await response.json()
     .catch((error) => {
-        alert("Duplicate Email Detected.");
+        alert("Error whiile updating user.");
         document.getElementById('newEmail').value = global_email;
     });
     if (responseData.success) {
@@ -213,7 +213,9 @@ async function havingQuery(event) {
             }
         });
     
-        const psaResData = await psaRes.json();
+        const psaResData = await psaRes.json().catch((error) => {
+            alert("Error while fetching cards.");
+        });
     
         // Always clear old, already fetched data before new fetching process.
         if (psaTableBody) {
@@ -237,7 +239,9 @@ async function havingQuery(event) {
             }
         });
 
-        const psaResData = await psaRes.json();
+        const psaResData = await psaRes.json().catch((error) => {
+            alert("Please specify the card count.");
+        });
 
         // Always clear old, already fetched data before new fetching process.
         if (psaTableBody) {
