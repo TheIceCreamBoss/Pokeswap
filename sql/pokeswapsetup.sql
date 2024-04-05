@@ -1,5 +1,5 @@
 #!DB INIT!
-#DROP DATABASE pokeswap ; 
+DROP DATABASE IF EXISTS pokeswap; 
 CREATE DATABASE pokeswap;
 USE pokeswap;
 
