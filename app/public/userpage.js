@@ -138,7 +138,7 @@ async function updateUser(event) {
     });
     const responseData = await response.json()
     .catch((error) => {
-        alert("Error whiile updating user.");
+        alert("Duplicate Email Detected. Please Ensure the Email is Unique.");
         document.getElementById('newEmail').value = global_email;
     });
     if (responseData.success) {
