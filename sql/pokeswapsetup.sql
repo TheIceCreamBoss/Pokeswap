@@ -244,7 +244,8 @@ INSERT INTO cardType (info_id, collection) VALUES
 ('92','GRI'),
 (95, 'EXD'),
 (3, 'XY'),
-(95, 'EXTRR');
+(95, 'EXTRR'),
+(58, 'BS');
 
 INSERT INTO pokemonTypes (pokemon, type) VALUES
 ('pikachu','lightning'),
@@ -280,7 +281,8 @@ INSERT INTO pokemonCard (info_id, collection, pokemon, card_description, hp, gxc
 ('7','BS','hitmonchan','Special Punch','70',0),
 ('8','BS','machamp','Seismic Toss','100',0),
 ('9','BS','magneton','Selfdestruct','60',0),
-('10','BS','mewtwo','Barrier','60',0);
+('10','BS','mewtwo','Barrier','60',0),
+('58', 'BS', 'pikachu','Lightning', '40', 0);
 
 
 INSERT INTO energyCardDescriptions (`type`, card_description) VALUES
