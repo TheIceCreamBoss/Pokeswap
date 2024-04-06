@@ -60,7 +60,10 @@ async function fetchAndDisplayPokemonCards(event) {
         }
     });
 
-    const responseData = await response.json();
+    const responseData = await response.json()
+    .catch((error) => {
+        alert("No Cards Found. Ensure the Fields Above are Correct.");
+    });
 
     if (tableBody) {
         tableBody.innerHTML = '';

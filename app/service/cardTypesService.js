@@ -117,6 +117,9 @@ async function getPokemonCardsJoined(req) {
             sqlStatement += "type, ";
         }
 
+        if (sqlStatement == "SELECT ") {
+            resolve(results);
+        }
 
 
         if(req.headers.collectionid &&  req.headers.collectionid != 'null' && req.headers.pokemonname && req.headers.pokemonname != 'null') {
@@ -141,9 +144,6 @@ async function getPokemonCardsJoined(req) {
 
         console.log(sqlStatement);
 
-        if (sqlStatement == "SELECT ") {
-            return null;
-        }
 
         // Remove the trailing comma and space
         sqlStatement = sqlStatement.slice(0, -2);

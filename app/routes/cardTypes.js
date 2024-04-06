@@ -136,10 +136,12 @@ router.get('/c', async (req, res, next) => {
 router.get('/pokemon', async (req, res, next) => {
     try {
         const results = await cardTypesService.getPokemonCardsJoined(req);
-        if (results) {
-        res.send(results);
+        if (results.length == 0) {
+            res.status(404).send('No cards found');
+        } else if (results) {
+            res.send(results);
         } else {
-        res.status(404).send('No cards found');
+            res.status(404).send('No cards found');
         }
     } catch (error) {
         console.error(error);
